@@ -9,10 +9,11 @@ body
 h1  
 {
 	font-family:Verdana, Arial, Helvetica, sans-serif;
-	font-size:30px;
+	font-size:50px;
 	font-weight:bold;
 	margin:0;
 	padding:0;
+        text-align: center
 }
 
 hr 
@@ -63,7 +64,10 @@ ul
     color:white;
     text-align:center;
     padding:5px;
+    height: 150px;
+    vertical-align: central
 }
+
 #nav {
     line-height:30px;
     background-color:#eeeeee;
@@ -83,4 +87,5 @@ ul
     clear:both;
     text-align:center;
     padding:5px; 
+    height : 50px;
 }

@@ -5,6 +5,7 @@ body {
 	padding: 0px;
 	background: #FFFFFF url(images/homepage01.gif) repeat-x left top;
 	font-family: Verdana, Arial, Helvetica, sans-serif;
+        text-align: center
 }
 
 h1, h2, h3, h4, h5, h6 {

@@ -13,14 +13,24 @@ public class NewQuestion extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String type = response.getHeader("questionType");
+         switch (type) {
+            case "Open":  
+                     break;
+            case "MultipleAnswer":  
+                     break;
+            case "YesNo":  
+                     break;
+            default: 
+                     break;
+        }
         try (PrintWriter out = response.getWriter()) {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet NewQuestion</title>");            
+            out.println("<title>New Question</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet NewQuestion at " + request.getContextPath() + "</h1>");
+            out.println("<h2>Enter the question: </h2>");
             out.println("</body>");
             out.println("</html>");
         }

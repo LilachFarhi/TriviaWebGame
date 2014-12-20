@@ -9,10 +9,11 @@ body
 h1  
 {
 	font-family:Verdana, Arial, Helvetica, sans-serif;
-	font-size:16px;
+	font-size:50px;
 	font-weight:bold;
 	margin:0;
 	padding:0;
+        text-align: center
 }
 
 hr 
@@ -63,24 +64,35 @@ ul
     color:white;
     text-align:center;
     padding:5px;
+    height: 150px;
+    vertical-align: central
 }
+
 #nav {
     line-height:30px;
     background-color:#eeeeee;
-    height:300px;
-    width:200px;
+    height:350px;
+    width:250px;
     float:left;
     padding:5px; 
 }
 #section {
     width:350px;
+    height:350px;
     float:left;
     padding:10px; 
 }
+
+#section iframe
+{
+    height:350px
+}
+
 #footer {
     background-color:#FFCCCC;
     color:white;
     clear:both;
     text-align:center;
     padding:5px; 
+    height : 50px;
 }

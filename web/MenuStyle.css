@@ -71,20 +71,20 @@ ul
 #nav {
     line-height:30px;
     background-color:#eeeeee;
-    height:350px;
+    height:650px;
     width:250px;
     float:left;
     padding:5px; 
 }
 #section {
     width: 1000px;
-    height:350px;
+    height:650px;
     float:left;
 }
 
 #section iframe
 {
-    height:350px;
+    height:650px;
     width: 1000px
 }
 

@@ -25,7 +25,6 @@ public class NewQuestion extends HttpServlet {
          switch (type) {
             case "Open":  
                 answerText = "<input type=\"text\" name=\"answer\" width=\"100\" height=\"100\">";
-                answerText += "<br>";
                 break;
             case "MultipleAnswer":
                 answerText = "<input type=\"text\" name=\"answer\" width=\"100\" height=\"100\">";
@@ -35,13 +34,11 @@ public class NewQuestion extends HttpServlet {
                 answerText += "Seperate the wrong answers by entering \"|\" between each answer.";
                 answerText += "<br>";
                 answerText += "<input type=\"text\" name=\"answer\" width=\"100\" height=\"100\">";
-                answerText += "<br>";
                 break;
             case "YesNo":  
                 answerText = "<input type=\"radio\" name=\"TrueFalse\" value=\"True\">True";
                 answerText += "<br>";
                 answerText += "<input type=\"radio\" name=\"TrueFalse\" value=\"False\">False";
-                answerText += "<br>";
                 break;
             default: 
                 answerText = "Please choose the type of question you would like to add.";
@@ -72,14 +69,21 @@ public class NewQuestion extends HttpServlet {
             if (isValid)
             {
                 out.println("<h2>Enter the question: </h2>");
-                out.println("<br>");
                 out.println("<input type=\"text\" name=\"answer\" width=\"100\" height=\"100\">");
                 out.println("<br>");
-                out.println("<h2>Enter the answer: </h2>");
                 out.println("<br>");
+                out.println("<h2>Enter the answer: </h2>");
             }
             
             out.println(answerText);
+            
+            if (isValid)
+            {
+                out.println("<br>");
+                out.println("<br>");
+                out.println("<input type=\"submit\" value=\"Submit\">");
+            }
+            
             out.println("</body>");
             out.println("</html>");
         }

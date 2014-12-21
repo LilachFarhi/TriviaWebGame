@@ -12,87 +12,101 @@ public class Login extends HttpServlet {
     public static final String FirstNameAttribute = "firstName";
     public static final String ErrorMessageAttribute = "errorMessage";
     public static final String LastNameAttribute = "lastName";
+    public static final String RememberMeParameter = "rememberMe";
+    public static final String RememberMeParameterCheckedValue = "true";
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         response.setContentType("text/html;charset=UTF-8");
         
-        String firstName = null;
-        String lastName = null;
-        Cookie[] cookies = request.getCookies();
+        String firstName = (String)session.getAttribute(FirstNameAttribute);
+        String lastName = (String)session.getAttribute(LastNameAttribute);
         
-        if (cookies != null) {
-                for(int i=0; i<cookies.length; i++) {
-                    Cookie c = cookies[i];
-                    
-                    if ((c.getName().equals(FirstNameAttribute)))
-                    {
-                        firstName = c.getValue();
-                    }
-                    
-                    if ((c.getName().equals(LastNameAttribute)))
-                    {
-                        lastName = c.getValue();
+        if (firstName == null || lastName == null)
+        {
+            Cookie[] cookies = request.getCookies();
+
+            if (cookies != null) {
+                    for(int i=0; i<cookies.length; i++) {
+                        Cookie c = cookies[i];
+
+                        if ((c.getName().equals(FirstNameAttribute)))
+                        {
+                            firstName = c.getValue();
+                        }
+
+                        if ((c.getName().equals(LastNameAttribute)))
+                        {
+                            lastName = c.getValue();
+                        }
                     }
                 }
+
+            if (firstName != null && lastName != null)
+            {
+                session.setAttribute(FirstNameAttribute, firstName);
+                session.setAttribute(LastNameAttribute, lastName);
+                response.sendRedirect("StartGame.html");
             }
-        
-        if (firstName != null && lastName != null)
-        {
-            session.setAttribute(FirstNameAttribute, firstName);
-            session.setAttribute(LastNameAttribute, lastName);
-            response.sendRedirect("StartGame.html");
+            else
+            {
+                Object errMessage = request.getAttribute(ErrorMessageAttribute);
+                String firstNameValue = request.getParameter(FirstNameAttribute);
+                String lastNameValue = request.getParameter(LastNameAttribute);
+
+                try (PrintWriter out = response.getWriter()) {
+                out.println("<!DOCTYPE html>");
+                out.println("<html>");
+                out.println("<head>");
+                out.println("<link rel=\"stylesheet\" href=\"Main.css\"/>");
+                out.println("<title>Login</title>");            
+                out.println("</head>");
+                out.println("<body>");
+                out.println("<form action=\"ValidateUserData\" method=\"GET\">");
+                out.println("<h1>Please login to start the game</h1>");
+                out.println("<br>");
+                if (errMessage != null)
+                {
+                     out.println("<h3 id=\"errorMessage\">There are validation errors: "
+                        + errMessage + "</h3>");
+                }
+                out.println("<h2>First name: </h2>");
+                out.println("<input type=\"text\" name=\"" +
+                        FirstNameAttribute + "\" size=\"50\" ");
+
+                if (firstNameValue != null)
+                {
+                    out.println("value=\"" + firstNameValue + "\"");
+                }
+
+                out.println(">");
+                out.println("<h2>Last name: </h2>");
+                out.println("<input type=\"text\" name=\""+ LastNameAttribute +
+                        "\" size=\"50\" ");
+
+                if (lastNameValue != null)
+                {
+                    out.println("value=\"" + lastNameValue + "\"");
+                }
+
+                out.println(">");
+                out.println("<br>");
+                out.println("<br>");
+                out.println("<input type=\"checkbox\" name=\"" +
+                        RememberMeParameter + "\" value=\"" +
+                        RememberMeParameterCheckedValue + "\"> Remember me<br>");
+                out.println("<br>");
+                out.println("<input type=\"submit\" value=\"Submit\">");
+                out.println("</form>");
+                out.println("</body>");
+                out.println("</html>");
+                }
+            }
         }
         else
         {
-            Object errMessage = request.getAttribute(ErrorMessageAttribute);
-            String firstNameValue = request.getParameter(FirstNameAttribute);
-            String lastNameValue = request.getParameter(LastNameAttribute);
-            
-            try (PrintWriter out = response.getWriter()) {
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<link rel=\"stylesheet\" href=\"Main.css\"/>");
-            out.println("<title>Login</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<form action=\"ValidateUserData\" method=\"GET\">");
-            out.println("<h1>Please login to start the game</h1>");
-            out.println("<br>");
-            if (errMessage != null)
-            {
-                 out.println("<h3 id=\"errorMessage\">There are validation errors: "
-                    + errMessage + "</h3>");
-            }
-            out.println("<h2>First name: </h2>");
-            out.println("<input type=\"text\" name=\"" +
-                    FirstNameAttribute + "\" size=\"50\" ");
-            
-            if (firstNameValue != null)
-            {
-                out.println("value=\"" + firstNameValue + "\"");
-            }
-            
-            out.println(">");
-            out.println("<h2>Last name: </h2>");
-            out.println("<input type=\"text\" name=\""+ LastNameAttribute +
-                    "\" size=\"50\" ");
-            
-            if (lastNameValue != null)
-            {
-                out.println("value=\"" + lastNameValue + "\"");
-            }
-            
-            out.println(">");
-            out.println("<br>");
-            out.println("<br>");
-            out.println("<input type=\"submit\" value=\"Submit\">");
-            out.println("</form>");
-            out.println("</body>");
-            out.println("</html>");
-            }
+            response.sendRedirect("StartGame.html");
         }
     }
 

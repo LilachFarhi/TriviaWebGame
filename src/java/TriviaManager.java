@@ -138,6 +138,22 @@ public class TriviaManager {
         return allQuestionsByQuestionDifficulty;
     }
     
+    public List<Question> getQuestionsByCategoryAndQuestionDifficulty(Category category, 
+            QuestionDifficulty questionDifficulty)
+    {
+        List<Question> allQuestionsByCategoryAndQuestionDifficulty = new ArrayList();
+
+        for (Map.Entry<Category, Map<QuestionDifficulty, List<Question>>> entryType
+                : triviaDataByCategoryAndDifficulty.entrySet()) {
+            if (entryType.getKey() == category)
+            {
+                allQuestionsByCategoryAndQuestionDifficulty.addAll(entryType.getValue().get(questionDifficulty));
+            }
+        }
+
+        return allQuestionsByCategoryAndQuestionDifficulty;
+    }
+    
     public void AddQuestion(Question questionToAdd)
     {
         if (questionToAdd != null) 

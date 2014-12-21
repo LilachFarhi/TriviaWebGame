@@ -9,6 +9,7 @@ public class TriviaManager {
     
     private Map<Type, Map<QuestionDifficulty, List<Question>>> triviaDataByDifficulty;
     private Map<Type, Map<Category, List<Question>>> triviaDataByCategory;
+    private Map<Category, Map<QuestionDifficulty, List<Question>>> triviaDataByCategoryAndDifficulty;
     
     public TriviaManager(List<Object> triviaData)
     {
@@ -22,21 +23,39 @@ public class TriviaManager {
         this.triviaDataByCategory.put(YesOrNoQuestion.class, new HashMap());
         this.triviaDataByCategory.put(OpenQuestion.class, new HashMap());
         
+        this.triviaDataByCategoryAndDifficulty = new HashMap();
+        
+        Category[] allCategories = Category.values();
+        QuestionDifficulty[] allDifficulties = QuestionDifficulty.values();
+        
+        for (Category category : allCategories) 
+        {
+            this.triviaDataByCategoryAndDifficulty.put(category, new HashMap());
+        }
+        
         for(Entry<Type, Map<QuestionDifficulty, List<Question>>> entry : 
                 this.triviaDataByDifficulty.entrySet()) {
-            entry.getValue().put(QuestionDifficulty.EASY, new ArrayList());
-            entry.getValue().put(QuestionDifficulty.MEDIUM, new ArrayList());
-            entry.getValue().put(QuestionDifficulty.HARD, new ArrayList());
+            
+            for (QuestionDifficulty questionDifficulty : allDifficulties) 
+            {
+                entry.getValue().put(questionDifficulty, new ArrayList());
+            }
         }
         
         for(Entry<Type, Map<Category, List<Question>>> entry : 
                 this.triviaDataByCategory.entrySet()) {
-            entry.getValue().put(Category.FASHION, new ArrayList());
-            entry.getValue().put(Category.HISTORY, new ArrayList());
-            entry.getValue().put(Category.MOVIES, new ArrayList());
-            entry.getValue().put(Category.MUSIC, new ArrayList());
-            entry.getValue().put(Category.SPORTS, new ArrayList());
-            entry.getValue().put(Category.TELEVISION, new ArrayList());
+            for (Category category : allCategories) 
+            {
+                entry.getValue().put(category, new ArrayList());
+            }
+        }
+        
+        for(Entry<Category, Map<QuestionDifficulty, List<Question>>> entry : 
+                this.triviaDataByCategoryAndDifficulty.entrySet()) {
+            for (QuestionDifficulty questionDifficulty : allDifficulties) 
+            {
+                entry.getValue().put(questionDifficulty, new ArrayList());
+            }
         }
         
         CreateTriviaData(triviaData);
@@ -73,6 +92,13 @@ public class TriviaManager {
                 triviaDataByCategory.get(OpenQuestion.class)
                         .get(question.getCategory()).add(question);
             }
+            
+            if (currentObject instanceof Question)
+            {
+                Question baseQuestion = (Question)currentObject;
+                triviaDataByCategoryAndDifficulty.get(baseQuestion.getCategory())
+                        .get(baseQuestion.getDifficulty()).add(baseQuestion);
+            }
         }
     }
 
@@ -82,6 +108,10 @@ public class TriviaManager {
     
     public Map<Type, Map<Category, List<Question>>> getTriviaDataByCategory() {
         return new HashMap<>(triviaDataByCategory);
+    }
+    
+    public Map<Category, Map<QuestionDifficulty, List<Question>>> getTriviaDataByCategoryAndDifficulty() {
+        return new HashMap<>(triviaDataByCategoryAndDifficulty);
     }
     
     public List<Question> getQuestionsByCategory(Category category)
@@ -133,9 +163,12 @@ public class TriviaManager {
            triviaDataByDifficulty.get(OpenQuestion.class).get(questionToDelete.getDifficulty()).remove(questionToDelete);
            triviaDataByCategory.get(OpenQuestion.class).get(questionToDelete.getCategory()).remove(questionToDelete);
         }
+        
+        triviaDataByCategoryAndDifficulty.get(questionToDelete.getCategory())
+                .get(questionToDelete.getDifficulty()).add(questionToDelete);
     }
 
-    private void AddQuestionToTriviaData(Object currentObject) 
+    private void AddQuestionToTriviaData(Question currentObject) 
     {
         if (currentObject instanceof MultipleAnswersQuestion)
         {
@@ -155,5 +188,8 @@ public class TriviaManager {
             triviaDataByDifficulty.get(OpenQuestion.class).get(question.getDifficulty()).add(question);
             triviaDataByCategory.get(OpenQuestion.class).get(question.getCategory()).add(question);
         }
+        
+        triviaDataByCategoryAndDifficulty.get(currentObject.getCategory())
+                .get(currentObject.getDifficulty()).add(currentObject);
     }
 }

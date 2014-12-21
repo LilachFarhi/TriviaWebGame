@@ -111,6 +111,31 @@ public class NewQuestion extends HttpServlet {
                 out.println("</html>");
             }
         }
+        else
+        {
+            String errorMessage = "";
+            String question = request.getParameter(QuestionParameter);
+            if (question == null || question == "")
+            {
+                errorMessage += "You must enter a text for the question.<br>";
+            }
+            
+            switch (questionType) {
+                case OpenQuestionParameter:
+                    
+                    break;
+                case MultipleAnswerQuestionParameter:
+                    
+                    break;
+                case YesOrNoQuestionParameter:
+                    
+                    break;
+                default:
+                    errorMessage += "A general error has occured. Please contact the" +
+                            " system administrator.<br>";
+                    break;
+            }
+        }
     }
 
     @Override

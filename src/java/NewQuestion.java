@@ -48,11 +48,13 @@ public class NewQuestion extends HttpServlet {
                     answerText += "<br>";
                     answerText += "<br>";
                     answerText += "<h2>Enter the wrong answers: </h2>";
-                    answerText += "Seperate the wrong answers by entering \"|\" between each answer.";
+                    answerText += "Enter number of wrong answers (then click on 'Ok'): ";
+                    answerText += "<input type=\"text\" id=\"numOfanswers\" name=\"numOfanswers\" value=\"\">";
+                    answerText += " <a href=\"#\" id=\"filldetails\" onclick=\"addAnswerField()\">Ok</a>";
                     answerText += "<br>";
-                    answerText += "<br>";
-                    answerText += "<input type=\"text\" name=\"" +
-                            WrongAnswersParameter + "\" size=\"120\">";
+                    answerText += "<div>";
+                    answerText += "<div id=\"container\"/>";
+                    answerText += "</div>";
                     break;
                 case YesOrNoQuestionParameter:
                     session.setAttribute(QuestionTypeAttribute, YesOrNoQuestionParameter);
@@ -76,6 +78,8 @@ public class NewQuestion extends HttpServlet {
                 out.println("<!DOCTYPE html>");
                 out.println("<html>");
                 out.println("<head>");
+                
+                BuildJavaScriptToAddMultipleAnswerFields(out);
 
                 if (isValid) {
                     out.println("<link rel=\"stylesheet\" href=\"Main.css\"/>");
@@ -103,7 +107,9 @@ public class NewQuestion extends HttpServlet {
                 if (isValid) {
                     out.println("<br>");
                     out.println("<br>");
+                    out.println("<div id=\"submitDiv\">");
                     out.println("<input type=\"submit\" value=\"Submit\">");
+                    out.println("</div>");
                 }
 
                 out.println("</form>");
@@ -136,6 +142,35 @@ public class NewQuestion extends HttpServlet {
                     break;
             }
         }
+    }
+
+    private void BuildJavaScriptToAddMultipleAnswerFields(final PrintWriter out) {
+        out.println("<script type='text/javascript'>");
+        BuildIsIntFunction(out);
+        out.println("function addAnswerField(){");
+        out.println("var number = document.getElementById(\"numOfanswers\").value;");
+        out.println("if (isInt(number)){");
+        out.println("var container = document.getElementById(\"container\");");
+        out.println("while (container.hasChildNodes()) {");
+        out.println("container.removeChild(container.lastChild);}");
+        out.println("for (i=0;i<number;i++){");
+        out.println("container.appendChild(document.createTextNode(\"Answer \" + (i+1) + \":\"));");
+        out.println("var input = document.createElement(\"input\");");
+        out.println("input.type = \"text\";");
+        String inputName = "input.name = \"" + WrongAnswersParameter + "\" + + (i+1)";
+        out.println(inputName);
+        out.println("input.size=\"100\";");
+        out.println("container.appendChild(input);");
+        out.println("container.appendChild(document.createElement(\"br\"));}");
+        out.println("}}</script>");
+    }
+    
+    private void BuildIsIntFunction(final PrintWriter out)
+    {
+        out.println("function isInt(value) {");
+        out.println("return !isNaN(value) &&");
+        out.println("parseInt(Number(value)) == value &&");
+        out.println("!isNaN(parseInt(value, 10));}");  
     }
 
     @Override

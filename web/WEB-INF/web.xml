@@ -4,13 +4,21 @@
         <servlet-name>NewQuestion</servlet-name>
         <servlet-class>NewQuestion</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AddQuestion</servlet-name>
+        <servlet-class>AddQuestion</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>NewQuestion</servlet-name>
         <url-pattern>/NewQuestion</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddQuestion</servlet-name>
+        <url-pattern>/AddQuestion</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
-</web-app> 
+</web-app>

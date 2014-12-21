@@ -1,5 +1,9 @@
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -13,7 +17,6 @@ public class NewQuestion extends HttpServlet {
     private static final String MultipleAnswerQuestionParameter = "MultipleAnswer";
     private static final String YesOrNoQuestionParameter = "YesNo";
     private static final String AnswerParameter = "answer";
-    private static final String TrueOrFalseParameter = "TrueFalse";
     private static final String WrongAnswersParameter = "wrongAnswers";
     private static final String QuestionParameter = "question";
     
@@ -59,11 +62,11 @@ public class NewQuestion extends HttpServlet {
                 case YesOrNoQuestionParameter:
                     session.setAttribute(QuestionTypeAttribute, YesOrNoQuestionParameter);
                     answerText = "<input type=\"radio\" name=\"" +
-                            TrueOrFalseParameter + "\" value=\"" +
+                            AnswerParameter + "\" value=\"" +
                             Boolean.toString(true) + "\">True";
                     answerText += "<br>";
                     answerText += "<input type=\"radio\" name=\"" +
-                            TrueOrFalseParameter + "\" value=\"" +
+                            AnswerParameter + "\" value=\"" +
                             Boolean.toString(false) + "\">False";
                     break;
                 default:
@@ -107,6 +110,7 @@ public class NewQuestion extends HttpServlet {
                 if (isValid) {
                     out.println("<br>");
                     out.println("<br>");
+                    DisplayCategories(out);
                     out.println("<div id=\"submitDiv\">");
                     out.println("<input type=\"submit\" value=\"Submit\">");
                     out.println("</div>");
@@ -119,31 +123,101 @@ public class NewQuestion extends HttpServlet {
         }
         else
         {
+            ArrayList<String> wrongAnswers = new ArrayList<>();
             String errorMessage = "";
             String question = request.getParameter(QuestionParameter);
-            if (question == null || question == "")
+            if (question == null || "".equals(question))
             {
                 errorMessage += "You must enter a text for the question.<br>";
             }
             
-            switch (questionType) {
-                case OpenQuestionParameter:
+            String answer = request.getParameter(AnswerParameter);
+            if (answer == null || "".equals(answer))
+            {
+                errorMessage += "You must enter a text for the answer.<br>";
+            }
+            
+            if (questionType.equals(MultipleAnswerQuestionParameter))
+            {
+                Map<String, String[]> map = request.getParameterMap();
+                
+                for(Entry<String, String[]> entry : map.entrySet()) {
+                    String key = entry.getKey();
                     
+                    if (key.contains(WrongAnswersParameter))
+                    {
+                        String value = entry.getValue()[0];
+                        
+                        if (value == null || "".equals(value))
+                        {
+                            errorMessage += "All wrong answers must contain a value.<br>";
+                            break;
+                        }
+                        else
+                        {
+                            wrongAnswers.add(value);
+                        }
+                    }
+                }
+                
+                if (wrongAnswers.isEmpty())
+                {
+                    errorMessage += "A Multiple Answer Question must contain atleast one wrong answer.<br>";
+                }
+            }
+            
+            if ("".equals(errorMessage))
+            {
+                Question questionToAdd = null;
+                
+                switch (questionType) {
+                case OpenQuestionParameter:
+                    questionToAdd = new OpenQuestion(question, answer, 
+                            QuestionDifficulty.EASY, Category.FASHION);
                     break;
                 case MultipleAnswerQuestionParameter:
-                    
+                    questionToAdd = new MultipleAnswersQuestion(question, wrongAnswers, answer, 
+                            QuestionDifficulty.EASY, Category.FASHION);
                     break;
                 case YesOrNoQuestionParameter:
-                    
+                    questionToAdd = new YesOrNoQuestion(question, ConvertBooleanAnswer(answer), 
+                            QuestionDifficulty.EASY, Category.FASHION);
                     break;
                 default:
-                    errorMessage += "A general error has occured. Please contact the" +
-                            " system administrator.<br>";
                     break;
+                }
+                
+                if (questionToAdd != null)
+                {
+                    DataManager.AddQuestionToTriviaData(questionToAdd);
+                }
+            }
+            else
+            {
+                
             }
         }
     }
 
+    private void DisplayCategories(final PrintWriter out) {
+        out.println("<div>");
+        
+        Category[] allCategories = Category.values();
+        for (Category category : allCategories) 
+        {
+            int categoryInt = category.ordinal() + 1;
+            out.println("<input type=\"radio\" name=\"category\" value=\"" +
+                    categoryInt + "\">" + category.name() + "<br>");
+        }
+        
+        out.println("</div>");
+    }
+
+    private boolean ConvertBooleanAnswer(String answer)
+    {
+        return Boolean.toString(true).equals(answer);
+    }
+    
     private void BuildJavaScriptToAddMultipleAnswerFields(final PrintWriter out) {
         out.println("<script type='text/javascript'>");
         BuildIsIntFunction(out);

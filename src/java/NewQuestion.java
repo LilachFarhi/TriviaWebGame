@@ -12,6 +12,10 @@ public class NewQuestion extends HttpServlet {
     private static final String OpenQuestionParameter = "Open";
     private static final String MultipleAnswerQuestionParameter = "MultipleAnswer";
     private static final String YesOrNoQuestionParameter = "YesNo";
+    private static final String AnswerParameter = "answer";
+    private static final String TrueOrFalseParameter = "TrueFalse";
+    private static final String WrongAnswersParameter = "wrongAnswers";
+    private static final String QuestionParameter = "question";
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -34,24 +38,31 @@ public class NewQuestion extends HttpServlet {
             switch (type) {
                 case OpenQuestionParameter:
                     session.setAttribute(QuestionTypeAttribute, OpenQuestionParameter);
-                    answerText = "<input type=\"text\" name=\"answer\" size=\"100\">";
+                    answerText = "<input type=\"text\" name=\"" + 
+                            AnswerParameter + "\" size=\"100\">";
                     break;
                 case MultipleAnswerQuestionParameter:
                     session.setAttribute(QuestionTypeAttribute, MultipleAnswerQuestionParameter);
-                    answerText = "<input type=\"text\" name=\"answer\" size=\"100\">";
+                    answerText = "<input type=\"text\" name=\"" + 
+                            AnswerParameter + "\" size=\"100\">";
                     answerText += "<br>";
                     answerText += "<br>";
                     answerText += "<h2>Enter the wrong answers: </h2>";
                     answerText += "Seperate the wrong answers by entering \"|\" between each answer.";
                     answerText += "<br>";
                     answerText += "<br>";
-                    answerText += "<input type=\"text\" name=\"answer\" size=\"120\">";
+                    answerText += "<input type=\"text\" name=\"" +
+                            WrongAnswersParameter + "\" size=\"120\">";
                     break;
                 case YesOrNoQuestionParameter:
                     session.setAttribute(QuestionTypeAttribute, YesOrNoQuestionParameter);
-                    answerText = "<input type=\"radio\" name=\"TrueFalse\" value=\"True\">True";
+                    answerText = "<input type=\"radio\" name=\"" +
+                            TrueOrFalseParameter + "\" value=\"" +
+                            Boolean.toString(true) + "\">True";
                     answerText += "<br>";
-                    answerText += "<input type=\"radio\" name=\"TrueFalse\" value=\"False\">False";
+                    answerText += "<input type=\"radio\" name=\"" +
+                            TrueOrFalseParameter + "\" value=\"" +
+                            Boolean.toString(false) + "\">False";
                     break;
                 default:
                     answerText = "Please choose the type of question you would like to add.";
@@ -79,7 +90,8 @@ public class NewQuestion extends HttpServlet {
 
                 if (isValid) {
                     out.println("<h2>Enter the question: </h2>");
-                    out.println("<input type=\"text\" name=\"question\" size=\"75\"");
+                    out.println("<input type=\"text\" name=\"" +
+                            QuestionParameter + "\" size=\"75\"");
                     out.println("<br>");
                     out.println("<br>");
                     out.println("<br>");

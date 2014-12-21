@@ -3,7 +3,6 @@
 body {
 	margin: 10px 0px;
 	padding: 0px;
-	background: #FFFFFF url(images/homepage01.gif) repeat-x left top;
 	font-family: Verdana, Arial, Helvetica, sans-serif;
         text-align: center
 }
@@ -42,7 +41,6 @@ a:hover {
 #wrapper {
 	width: 700px;
 	margin: 0px auto;
-	background: #FFFFFF url(images/homepage02.gif) repeat-y right top;
 	border: 3px solid #D9DDEB;
 }
 

@@ -72,12 +72,7 @@ public class NewQuestion extends HttpServlet {
 
             BuildJavaScriptToAddMultipleAnswerFields(out);
 
-            if (isValid) {
-                out.println("<link rel=\"stylesheet\" href=\"Main.css\"/>");
-            } else {
-
-            }
-
+            out.println("<link rel=\"stylesheet\" href=\"Main.css\"/>");
             out.println("<title>New Question</title>");
             out.println("</head>");
             out.println("<body>");

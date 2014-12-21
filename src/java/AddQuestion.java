@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -33,6 +34,21 @@ public class AddQuestion extends HttpServlet {
             if (questionToAdd != null)
             {
                 DataManager.AddQuestionToTriviaData(questionToAdd);
+                
+                response.setContentType("text/html;charset=UTF-8");
+                try (PrintWriter out = response.getWriter()) {
+                    out.println("<!DOCTYPE html>");
+                    out.println("<html>");
+                    out.println("<head>");
+                    out.println("<title>New Question</title>");            
+                    out.println("</head>");
+                    out.println("<body>");
+                    out.println("<h1>Your question has been successfully added!</h1>");
+                    out.println("<br>");
+                    out.println("<img src=\"Triviaquestion.jpg\">");
+                    out.println("</body>");
+                    out.println("</html>");
+                }
             }
         }
         else

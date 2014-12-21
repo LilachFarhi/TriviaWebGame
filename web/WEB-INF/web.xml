@@ -8,6 +8,14 @@
         <servlet-name>AddQuestion</servlet-name>
         <servlet-class>AddQuestion</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Login</servlet-name>
+        <servlet-class>Login</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ValidateUserData</servlet-name>
+        <servlet-class>ValidateUserData</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>NewQuestion</servlet-name>
         <url-pattern>/NewQuestion</url-pattern>
@@ -15,6 +23,14 @@
     <servlet-mapping>
         <servlet-name>AddQuestion</servlet-name>
         <url-pattern>/AddQuestion</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Login</servlet-name>
+        <url-pattern>/Login</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ValidateUserData</servlet-name>
+        <url-pattern>/ValidateUserData</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

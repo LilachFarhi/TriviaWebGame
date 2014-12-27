@@ -9,6 +9,17 @@ public class RemoveQuestion extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String path = getServletContext().getRealPath("/");
+        
+        try 
+        {
+            DataManager.GetAllQuestions(path);
+        }
+        catch (IOException | ClassNotFoundException ex) 
+        {
+            
+        }
+        
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             out.println("<!DOCTYPE html>");

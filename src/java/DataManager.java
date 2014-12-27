@@ -82,4 +82,12 @@ public class DataManager {
 
         return allQuestions;
     }
+    
+    public static List<Object> GetAllQuestions(String path) throws IOException, 
+            FileNotFoundException, ClassNotFoundException
+    {
+        GetTriviaDataFromFile(path + "\\" + TriviaDataFileName);
+        List<Object> allQuestions = GetAllQuestionsForSave(triviaManager.getTriviaDataByDifficulty());
+        return allQuestions;
+    }
 }

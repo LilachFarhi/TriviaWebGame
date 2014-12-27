@@ -32,6 +32,10 @@
         <servlet-name>RemoveQuestion</servlet-name>
         <servlet-class>RemoveQuestion</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>FinishGame</servlet-name>
+        <servlet-class>FinishGame</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>NewQuestion</servlet-name>
         <url-pattern>/NewQuestion</url-pattern>
@@ -63,6 +67,10 @@
     <servlet-mapping>
         <servlet-name>RemoveQuestion</servlet-name>
         <url-pattern>/RemoveQuestion</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FinishGame</servlet-name>
+        <url-pattern>/FinishGame</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

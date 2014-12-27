@@ -6,23 +6,132 @@ and open the template in the editor.
 -->
 <html>
     <head>
+        <link rel="stylesheet" href="Main.css"/>
         <title>Login</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+         <style>
+            a {
+    background: #ccc;
+    cursor: pointer;
+    border-top: solid 2px #eaeaea;
+    border-left: solid 2px #eaeaea;
+    border-bottom: solid 2px #777;
+    border-right: solid 2px #777;
+    padding: 5px 5px;   	
+    }
+
+a.down {
+    background: #bbb;
+    border-top: solid 2px #777;
+    border-left: solid 2px #777;
+    border-bottom:solid 2px  #eaeaea;
+    border-right: solid 2px #eaeaea;
+    }
+   #Category button {
+        background-color:black;
+        color: white;
+        width : 300px;
+        height: 60px;
+        font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:50px;
+    }
+    </style>
     </head>
-    <body>
-      <!--  <section class="loginform cf">  
-            <form name="login" action="index_submit" method="get" accept-charset="utf-8">  
-               <label for="FirstName">First name</label>  
-                    <input type="text" name="FirstName" required>  
-                    <label for="LastName">Last name</label>  
-                    <input type="text" name="LastName"  required> 
-                    <input type="submit" value="Login">
-            </form>  
-        </section>  -->
+    
+  <body>     
+        
+<script>
+ 
+    function toggleButton(elementId) 
+    {
+        var button = document.getElementById(elementId);
+        var categoryInput = document.getElementById(elementId + "Input");
+        if(button.style.backgroundColor.match("black") ||  button.style.backgroundColor === "")
+        {
+            button.style.backgroundColor = "#C7377D";
+            categoryInput.setAttribute("value", elementId);
+        }
+        else
+        {
+            button.style.backgroundColor = "black";
+            categoryInput.setAttribute("value", null);
+        }
+    }
+
+
+</script>
+
+<form action="StartGame" method="GET">
+    
+<div id="Category"> 
+        <div>
+            <img src="FashionIcon.jpg" width="110" height="100" >
+            <button type='button' id="FASHION" onclick="toggleButton(this.id)" title="FASHION" >Fashion</button>
+            <input type="hidden" name="FASHION" id="FASHIONInput">
+        </div>
+        <div>
+            <input type="radio" name="FASHIONDifficulty" value ="EASY" id="Fashion,Easy">Easy 
+            <input type="radio" name="FASHIONDifficulty" value ="MEDIUM" id="Fashion,Medium">Medium 
+            <input type="radio" name="FASHIONDifficulty" value ="HARD" id="Fashion,Hard">Hard
+        </div>
+        <div>
+            <img src="HistoryIcon.png" width="110" height="100" >
+            <button type='button' id="HISTORY" onclick="toggleButton(this.id)" title="HISTORY" >History</button>
+            <input type="hidden" name="HISTORY" id="HISTORYInput">
+        </div>
+        <div>
+            <input type="radio" name="HISTORYDifficulty" value ="EASY" id="History,Easy">Easy 
+            <input type="radio" name="HISTORYDifficulty" value ="MEDIUM" id="History,Medium">Medium 
+            <input type="radio" name="HISTORYDifficulty" value ="HARD" id="History,Hard">Hard
+        </div>
+        <div>
+            <img src="MoviesIcon.jpg" width="110" height="100" >
+            <button type='button' id="MOVIES" onclick="toggleButton(this.id)" title="MOVIES" >Movies</button>
+            <input type="hidden" name="MOVIES" id="MOVIESInput">
+        </div>
+        <div>
+            <input type="radio" name="MOVIESDifficulty" value ="EASY" id="Movies,Easy">Easy 
+            <input type="radio" name="MOVIESDifficulty" value ="MEDIUM" id="Movies,Medium">Medium 
+            <input type="radio" name="MOVIESDifficulty" value ="HARD" id="Movies,Hard">Hard
+        </div>
+        <div>
+            <img src="MusicIcon.png" width="110" height="100" >
+            <button type='button' id="MUSIC" onclick="toggleButton(this.id)" title="MUSIC" >Music</button>
+            <input type="hidden" name="MUSIC" id="MUSICInput">
+        </div>
+        <div>
+            <input type="radio" name="MUSICDifficulty" value ="EASY" id="Music,Easy">Easy 
+            <input type="radio" name="MUSICDifficulty" value ="MEDIUM" id="Music,Medium">Medium 
+            <input type="radio" name="MUSICDifficulty" value ="HARD" id="Music,Hard">Hard
+        </div>
+        <div>
+            <img src="SportsIcon.png" width="110" height="100" >
+            <button type='button' id="SPORTS" onclick="toggleButton(this.id)" title="SPORTS" >Sports</button>
+            <input type="hidden" name="SPORTS" id="SPORTSInput">
+        </div>
+        <div>
+            <input type="radio" name="SPORTSDifficulty" value ="EASY" id="Sports,Easy">Easy 
+            <input type="radio" name="SPORTSDifficulty" value ="MEDIUM" id="Sports,Medium">Medium 
+            <input type="radio" name="SPORTSDifficulty" value ="HARD" id="Sports,Hard">Hard
+        </div>
+        <div>
+            <img src="TelevisionIcon.png" width="110" height="100" >
+            <button type='button' class id="TELEVISION" onclick="toggleButton(this.id)" title="TELEVISION" >Television</button>
+            <input type="hidden" name="TELEVISION" id="TELEVISIONInput">
+        </div>
+        <div>
+            <input type="radio" name="TELEVISIONDifficulty" value ="EASY" id="Television,Easy">Easy 
+            <input type="radio" name="TELEVISIONDifficulty" value ="MEDIUM" id="Television,Medium">Medium 
+            <input type="radio" name="TELEVISIONDifficulty" value ="HARD" id="Television,Hard">Hard
+        </div><br>
+</div>
+    <button style="background: transparent"> <img src="GetStarted.png" ></button>
+</form>
+
+     
       
-      
-    </body>
+</body>  
 </html>
 
 

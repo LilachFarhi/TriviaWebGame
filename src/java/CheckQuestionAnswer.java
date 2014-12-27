@@ -58,6 +58,9 @@ public class CheckQuestionAnswer extends HttpServlet {
                 }
                 
                 out.println("<a href=\"PlayGame\">Next Question</a>");
+                out.println("<form action=\"FinishGame\" method=\"GET\">");
+                out.println("<input type=\"submit\" value=\"FinishGame\">");
+                out.println("</form>");
                 out.println("</body>");
                 out.println("</html>");
             }

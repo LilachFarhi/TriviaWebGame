@@ -4,6 +4,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -25,30 +26,32 @@ public class PlayGame extends HttpServlet {
         List<Question> questionsToShow = (List<Question>) request.getAttribute("AllQuestions");
         Collections.shuffle(questionsToShow);
 
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<link rel=\"stylesheet\" href=\"Main.css\"/>");
-            out.println("<title>Play Game</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h2> Current player: " + firstName + " " + lastName + "</h2>");
-            
-            if (errMessage != null && !errMessage.equals(""))
-            {
-                out.println("<h3 id=\"errorMessage\">" + errMessage + "</h3>");
-            }
-            
-            out.println("<form action=\"CheckQuestionAnswer\" method=\"GET\">");
-            
-            if (questionsToShow.isEmpty()) {
-                
-            } 
-            else {
+        if (questionsToShow.isEmpty()) {
+            RequestDispatcher rd = request.getRequestDispatcher("FinishGame");
+            rd.forward(request, response);
+        } 
+        else
+        {
+            response.setContentType("text/html;charset=UTF-8");
+            try (PrintWriter out = response.getWriter()) {
+                out.println("<!DOCTYPE html>");
+                out.println("<html>");
+                out.println("<head>");
+                out.println("<link rel=\"stylesheet\" href=\"Main.css\"/>");
+                out.println("<title>Play Game</title>");
+                out.println("</head>");
+                out.println("<body>");
+                out.println("<h2> Current player: " + firstName + " " + lastName + "</h2>");
+
+                if (errMessage != null && !errMessage.equals(""))
+                {
+                    out.println("<h3 id=\"errorMessage\">" + errMessage + "</h3>");
+                }
+
+                out.println("<form action=\"CheckQuestionAnswer\" method=\"GET\">");
+
                 Question question;
-                
+
                 if (errMessage == null || errMessage.equals(""))
                 {
                     question = questionsToShow.get(0);
@@ -60,16 +63,19 @@ public class PlayGame extends HttpServlet {
                 {
                     question = (Question)request.getAttribute(PreviousAskedQuestionAttribute);
                 }
-                
-                out.println("<h3> Question: " + question.getQuestion() + "</h3><br>");
-                
-                DisplayQuestion(out, question);
-            }
 
-            out.println("<input type=\"submit\" value=\"Submit\">");
-            out.println("</form>");
-            out.println("</body>");
-            out.println("</html>");
+                out.println("<h3> Question: " + question.getQuestion() + "</h3><br>");
+
+                DisplayQuestion(out, question);
+
+                out.println("<input type=\"submit\" value=\"Submit\">");
+                out.println("</form>");
+                out.println("<form action=\"FinishGame\" method=\"GET\">");
+                out.println("<input type=\"submit\" value=\"FinishGame\">");
+                out.println("</form>");
+                out.println("</body>");
+                out.println("</html>");
+            }
         }
     }
 

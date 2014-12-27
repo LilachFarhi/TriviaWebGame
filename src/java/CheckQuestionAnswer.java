@@ -45,13 +45,19 @@ public class CheckQuestionAnswer extends HttpServlet {
                 
                 if (userAnswer.equalsIgnoreCase(question.getAnswer()))
                 {
-                    
+                    out.println("<img src=\"CorrectAnswer.jpg\" width=\"100\" height=\"100\"></img><br>");
+                    out.println("<h3 id=\"correctAnswer\">Your answer is correct!</h3>");
+                    out.println("<img src=\"CorrectAnswer2.jpg\" width=\"100\" height=\"100\"></img>");
                 }
                 else
                 {
-                    
+                    out.println("<img src=\"WrongAnswer.jpg\" width=\"100\" height=\"100\"></img><br>");
+                    out.println("<h3 id=\"wrongAnswer\">Your answer is wrong. Better luck next time.</h3>");
+                    out.println("<h4>The right answer if :" + question.getAnswer() + "</h4>");
+                    out.println("<img src=\"WrongAnswer2.jpg\" width=\"100\" height=\"100\"></img>");
                 }
                 
+                out.println("<a href=\"PlayGame\">Next Question</a>");
                 out.println("</body>");
                 out.println("</html>");
             }

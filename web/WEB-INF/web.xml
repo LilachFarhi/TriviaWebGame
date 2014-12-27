@@ -24,6 +24,10 @@
         <servlet-name>PlayGame</servlet-name>
         <servlet-class>PlayGame</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CheckQuestionAnswer</servlet-name>
+        <servlet-class>CheckQuestionAnswer</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>NewQuestion</servlet-name>
         <url-pattern>/NewQuestion</url-pattern>
@@ -47,6 +51,10 @@
     <servlet-mapping>
         <servlet-name>PlayGame</servlet-name>
         <url-pattern>/PlayGame</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CheckQuestionAnswer</servlet-name>
+        <url-pattern>/CheckQuestionAnswer</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

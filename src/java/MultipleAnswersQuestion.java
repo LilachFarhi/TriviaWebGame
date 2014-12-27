@@ -1,7 +1,3 @@
-
-
-
-
 import java.util.List;
 
 public class MultipleAnswersQuestion extends Question {

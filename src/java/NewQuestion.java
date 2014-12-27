@@ -243,7 +243,7 @@ public class NewQuestion extends HttpServlet {
         Category[] allCategories = Category.values();
         for (Category category : allCategories) 
         {
-            int categoryInt = category.ordinal() + 1;
+            int categoryInt = category.ordinal();
             out.println("<input type=\"radio\" name=\"" +
                     CategoryParameter + "\" value=\"" +
                     categoryInt + "\" ");
@@ -261,7 +261,7 @@ public class NewQuestion extends HttpServlet {
         QuestionDifficulty[] allDifficulties = QuestionDifficulty.values();
         for (QuestionDifficulty questionDifficulty : allDifficulties) 
         {
-            int difficultyInt = questionDifficulty.ordinal() + 1;
+            int difficultyInt = questionDifficulty.ordinal();
             out.println("<input type=\"radio\" name=\"" +
                     DifficultyParameter + "\" value=\"" +
                     difficultyInt + "\" ");

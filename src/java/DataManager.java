@@ -6,15 +6,15 @@ import java.util.List;
 import java.util.Map;
 
 public class DataManager {
-    private static final String TriviaDataFilePath = "src/TriviaData.txt";
+    public static final String TriviaDataFileName = "TriviaData.txt";
     private static FileManager fileManager;
     private static TriviaManager triviaManager;
     
-    public static String AddQuestionToTriviaData(Question questionToAdd) 
+    public static String AddQuestionToTriviaData(Question questionToAdd, String path) 
     {
         try 
         {
-            GetTriviaDataFromFile();
+            GetTriviaDataFromFile(path + "\\" + TriviaDataFileName);
             triviaManager.AddQuestion(questionToAdd);
             
             List<Object> allQuestions = GetAllQuestionsForSave(triviaManager.getTriviaDataByDifficulty());
@@ -23,15 +23,15 @@ public class DataManager {
         }
         catch (IOException | ClassNotFoundException ex) 
         {
-            return GetErrorMessage(ex);
+            return GetErrorMessage(ex, path + "\\" + TriviaDataFileName);
         }
     }
     
-    public static String RemoveQuestionFromTriviaData(Question questionToRemove)
+    public static String RemoveQuestionFromTriviaData(Question questionToRemove, String path)
     {
         try 
         {
-            GetTriviaDataFromFile();
+            GetTriviaDataFromFile(path + "\\" + TriviaDataFileName);
             triviaManager.DeleteQuestion(questionToRemove);
             
             List<Object> allQuestions = GetAllQuestionsForSave(triviaManager.getTriviaDataByDifficulty());
@@ -40,21 +40,21 @@ public class DataManager {
         }
         catch (IOException | ClassNotFoundException ex) 
         {
-            return GetErrorMessage(ex);
+            return GetErrorMessage(ex, path + "\\" + TriviaDataFileName);
         }
     }
     
-    private static void GetTriviaDataFromFile() throws IOException, 
+    private static void GetTriviaDataFromFile(String path) throws IOException, 
             FileNotFoundException, ClassNotFoundException
     {
-        fileManager = new FileManager(TriviaDataFilePath);
+        fileManager = new FileManager(path);
         triviaManager = new TriviaManager(fileManager.GetAllDataFromFile());
     }
     
-    private static String GetErrorMessage(Exception ex)
+    private static String GetErrorMessage(Exception ex, String path)
     {
         return ("An error occurred while trying to connect "
-                + "to the trivia data file : \'" + TriviaDataFilePath
+                + "to the trivia data file : \'" + path
                 + "\'.\n"
                 + "Please check the file location or contact "
                 + "the system administrator.\n"

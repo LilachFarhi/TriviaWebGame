@@ -33,25 +33,31 @@ public class AddQuestion extends HttpServlet {
 
             if (questionToAdd != null)
             {
-                DataManager.AddQuestionToTriviaData(questionToAdd);
+                String path = getServletContext().getRealPath("/");
+                errorMessage = DataManager.AddQuestionToTriviaData(questionToAdd, path);
                 
-                response.setContentType("text/html;charset=UTF-8");
-                try (PrintWriter out = response.getWriter()) {
-                    out.println("<!DOCTYPE html>");
-                    out.println("<html>");
-                    out.println("<head>");
-                    out.println("<title>New Question</title>");            
-                    out.println("</head>");
-                    out.println("<body>");
-                    out.println("<h1>Your question has been successfully added!</h1>");
-                    out.println("<br>");
-                    out.println("<img src=\"Triviaquestion.jpg\">");
-                    out.println("</body>");
-                    out.println("</html>");
+                if ("".equals(errorMessage))
+                {
+                    response.setContentType("text/html;charset=UTF-8");
+                    try (PrintWriter out = response.getWriter()) {
+                        out.println("<!DOCTYPE html>");
+                        out.println("<html>");
+                        out.println("<head>");
+                        out.println("<link rel=\"stylesheet\" href=\"Main.css\"/>");
+                        out.println("<title>New Question</title>");            
+                        out.println("</head>");
+                        out.println("<body>");
+                        out.println("<h1>Your question has been successfully added!</h1>");
+                        out.println("<br>");
+                        out.println("<img src=\"Triviaquestion.jpg\">");
+                        out.println("</body>");
+                        out.println("</html>");
+                    }
                 }
             }
         }
-        else
+        
+        if (!"".equals(errorMessage))
         {
             request.setAttribute(NewQuestion.ErrorMessageAttribute, errorMessage);
             request.setAttribute(NewQuestion.WrongAnswers, wrongAnswers);

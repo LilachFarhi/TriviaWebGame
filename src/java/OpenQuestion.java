@@ -1,7 +1,3 @@
-
-
-
-
 public class OpenQuestion extends Question {
     
     private String question;

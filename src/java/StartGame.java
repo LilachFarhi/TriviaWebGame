@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 
 public class StartGame extends HttpServlet 
 {
+    public static final String AllQuestionsAttribute = "AllQuestions";
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, FileNotFoundException, ClassNotFoundException 
     {
@@ -33,7 +34,7 @@ public class StartGame extends HttpServlet
             String categoryName = category.name();
             
             String selectedCategory = request.getParameter(categoryName);
-            String categoryDifficulty = request.getParameter(categoryName +"Difficulty");
+            String categoryDifficulty = request.getParameter(categoryName + "Difficulty");
             
             if ((selectedCategory != null && !selectedCategory.equals("")) && categoryDifficulty != null)
             {
@@ -62,7 +63,7 @@ public class StartGame extends HttpServlet
         if (difficultiesWithoudCategory.isEmpty() && categoriesWithoutDifficulty.isEmpty() 
                 && !selectedQuestions.isEmpty()) 
         {
-            request.setAttribute("Questions",selectedQuestions);
+            request.setAttribute(AllQuestionsAttribute, selectedQuestions);
 
             RequestDispatcher rd = request.getRequestDispatcher("PlayGame");
             rd.forward(request, response);

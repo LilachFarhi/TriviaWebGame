@@ -23,7 +23,7 @@ public class PlayGame extends HttpServlet {
         String lastName = (String) session.getAttribute(Login.LastNameAttribute);
         Object errMessage = request.getAttribute(ErrorMessageAttribute);
 
-        List<Question> questionsToShow = (List<Question>) request.getAttribute("AllQuestions");
+        List<Question> questionsToShow = (List<Question>) request.getAttribute(StartGame.AllQuestionsAttribute);
         Collections.shuffle(questionsToShow);
 
         if (questionsToShow.isEmpty()) {
@@ -56,7 +56,7 @@ public class PlayGame extends HttpServlet {
                 {
                     question = questionsToShow.get(0);
                     questionsToShow.remove(0);
-                    request.setAttribute("AllQuestions", questionsToShow);
+                    request.setAttribute(StartGame.AllQuestionsAttribute, questionsToShow);
                     request.setAttribute(PreviousAskedQuestionAttribute, question);
                 }
                 else

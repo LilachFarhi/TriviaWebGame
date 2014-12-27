@@ -11,6 +11,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class StartGame extends HttpServlet 
 {
@@ -19,6 +20,7 @@ public class StartGame extends HttpServlet
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, FileNotFoundException, ClassNotFoundException 
     {
+        HttpSession session = request.getSession();
         String path = getServletContext().getRealPath("/");
         Map<Category, Map<QuestionDifficulty, List<Question>>> allQuestions = 
                 DataManager.GetDataByCategoryAndDifficulty(path);
@@ -63,7 +65,7 @@ public class StartGame extends HttpServlet
         if (difficultiesWithoudCategory.isEmpty() && categoriesWithoutDifficulty.isEmpty() 
                 && !selectedQuestions.isEmpty()) 
         {
-            request.setAttribute(AllQuestionsAttribute, selectedQuestions);
+            session.setAttribute(AllQuestionsAttribute, selectedQuestions);
 
             RequestDispatcher rd = request.getRequestDispatcher("PlayGame");
             rd.forward(request, response);

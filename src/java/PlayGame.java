@@ -23,7 +23,7 @@ public class PlayGame extends HttpServlet {
         String lastName = (String) session.getAttribute(Login.LastNameAttribute);
         Object errMessage = request.getAttribute(ErrorMessageAttribute);
 
-        List<Question> questionsToShow = (List<Question>) request.getAttribute(StartGame.AllQuestionsAttribute);
+        List<Question> questionsToShow = (List<Question>) session.getAttribute(StartGame.AllQuestionsAttribute);
         Collections.shuffle(questionsToShow);
 
         if (questionsToShow.isEmpty()) {
@@ -56,12 +56,12 @@ public class PlayGame extends HttpServlet {
                 {
                     question = questionsToShow.get(0);
                     questionsToShow.remove(0);
-                    request.setAttribute(StartGame.AllQuestionsAttribute, questionsToShow);
-                    request.setAttribute(PreviousAskedQuestionAttribute, question);
+                    session.setAttribute(StartGame.AllQuestionsAttribute, questionsToShow);
+                    session.setAttribute(PreviousAskedQuestionAttribute, question);
                 }
                 else
                 {
-                    question = (Question)request.getAttribute(PreviousAskedQuestionAttribute);
+                    question = (Question)session.getAttribute(PreviousAskedQuestionAttribute);
                 }
 
                 out.println("<h3> Question: " + question.getQuestion() + "</h3><br>");
@@ -69,7 +69,7 @@ public class PlayGame extends HttpServlet {
                 DisplayQuestion(out, question);
 
                 out.println("<input type=\"submit\" value=\"Submit\">");
-                out.println("</form>");
+                out.println("</form><br>");
                 out.println("<form action=\"FinishGame\" method=\"GET\">");
                 out.println("<input type=\"submit\" value=\"FinishGame\">");
                 out.println("</form>");
@@ -98,7 +98,7 @@ public class PlayGame extends HttpServlet {
             out.println("<h3>Enter the answer: </h3>");
             OpenQuestion question = (OpenQuestion) questionToShow;
             out.println("<input type=\"text\" name=\"" +
-                NewQuestion.AnswerParameter + "\" size=\"100\">");
+                NewQuestion.AnswerParameter + "\" size=\"75\">");
         }
     }
 

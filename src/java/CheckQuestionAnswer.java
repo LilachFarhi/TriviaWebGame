@@ -15,7 +15,7 @@ public class CheckQuestionAnswer extends HttpServlet {
         String firstName = (String) session.getAttribute(Login.FirstNameAttribute);
         String lastName = (String) session.getAttribute(Login.LastNameAttribute);
         
-        Question question = (Question)request.getAttribute(PlayGame.PreviousAskedQuestionAttribute);
+        Question question = (Question)session.getAttribute(PlayGame.PreviousAskedQuestionAttribute);
         String userAnswer = request.getParameter(NewQuestion.AnswerParameter);
         
         if (userAnswer == null || userAnswer.equals(""))
@@ -53,11 +53,11 @@ public class CheckQuestionAnswer extends HttpServlet {
                 {
                     out.println("<img src=\"WrongAnswer.jpg\" width=\"100\" height=\"100\"></img><br>");
                     out.println("<h3 id=\"wrongAnswer\">Your answer is wrong. Better luck next time.</h3>");
-                    out.println("<h4>The right answer if :" + question.getAnswer() + "</h4>");
+                    out.println("<h4>The right answer is :" + question.getAnswer() + "</h4>");
                     out.println("<img src=\"WrongAnswer2.jpg\" width=\"100\" height=\"100\"></img>");
                 }
                 
-                out.println("<a href=\"PlayGame\">Next Question</a>");
+                out.println("<a href=\"PlayGame\">Next Question</a><br>");
                 out.println("<form action=\"FinishGame\" method=\"GET\">");
                 out.println("<input type=\"submit\" value=\"FinishGame\">");
                 out.println("</form>");

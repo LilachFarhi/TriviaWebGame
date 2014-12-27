@@ -8,7 +8,7 @@ import java.util.Map;
 public class DataManager {
     public static final String TriviaDataFileName = "TriviaData.txt";
     private static FileManager fileManager;
-    public static TriviaManager triviaManager;
+    private static TriviaManager triviaManager;
     
     public static String AddQuestionToTriviaData(Question questionToAdd, String path) 
     {
@@ -44,7 +44,7 @@ public class DataManager {
         }
     }
     
-    public static void GetTriviaDataFromFile(String path) throws IOException, 
+    private static void GetTriviaDataFromFile(String path) throws IOException, 
             FileNotFoundException, ClassNotFoundException
     {
         fileManager = new FileManager(path);
@@ -59,6 +59,13 @@ public class DataManager {
                 + "Please check the file location or contact "
                 + "the system administrator.\n"
                 + "Error data : " + ex);
+    }
+    
+    public static Map<Category, Map<QuestionDifficulty, List<Question>>> GetDataByCategoryAndDifficulty(String path) throws IOException, 
+            FileNotFoundException, ClassNotFoundException
+    {
+        GetTriviaDataFromFile(path + "\\" + TriviaDataFileName);
+        return triviaManager.getTriviaDataByCategoryAndDifficulty();
     }
     
     private static List<Object> GetAllQuestionsForSave(Map<Type, Map<QuestionDifficulty, List<Question>>> triviaData) 

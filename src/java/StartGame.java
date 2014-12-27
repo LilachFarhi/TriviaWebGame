@@ -26,7 +26,6 @@ public class StartGame extends HttpServlet
         List<Category> categoriesWithoutDifficulty = new ArrayList<>();
         List<Category> difficultiesWithoudCategory = new ArrayList<>();
         
-        
         Category[] allCategories = Category.values();
         
         for (Category category : allCategories) 

@@ -1,6 +1,7 @@
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -16,6 +17,7 @@ public class PlayGame extends HttpServlet {
         HttpSession session = request.getSession();
         String firstName = (String) session.getAttribute(Login.FirstNameAttribute);
         String lastName = (String) session.getAttribute(Login.LastNameAttribute);
+        Object errMessage = request.getAttribute("ErrorMessage");
 
         List<Question> questionsToShow = (List<Question>) request.getAttribute("AllQuestions");
         Collections.shuffle(questionsToShow);
@@ -29,21 +31,38 @@ public class PlayGame extends HttpServlet {
             out.println("</head>");
             out.println("<body>");
             out.println("<h2> Current player: " + firstName + " " + lastName + "</h2>");
-            out.println("<form>");
+            
+            if (errMessage != null && !errMessage.equals(""))
+            {
+                out.println("<h3 id=\"errorMessage\">" + errMessage + "</h3>");
+            }
+            
+            out.println("<form action=\"CheckQuestionAnswer\" method=\"GET\">");
             
             if (questionsToShow.isEmpty()) {
+                
             } 
             else {
-                Question question = questionsToShow.get(0);
-                questionsToShow.remove(0);
-                request.setAttribute("AllQuestions", questionsToShow);
+                Question question;
+                
+                if (errMessage == null || errMessage.equals(""))
+                {
+                    question = questionsToShow.get(0);
+                    questionsToShow.remove(0);
+                    request.setAttribute("AllQuestions", questionsToShow);
+                    request.setAttribute("PreviousAskedQuestion", question);
+                }
+                else
+                {
+                    question = (Question)request.getAttribute("PreviousAskedQuestion");
+                }
                 
                 out.println("<h3> Question: " + question.getQuestion() + "</h3><br>");
-                out.println("<h3>Enter the answer: </h3>");
                 
                 DisplayQuestion(out, question);
             }
 
+            out.println("<input type=\"submit\" value=\"Submit\">");
             out.println("</form>");
             out.println("</body>");
             out.println("</html>");
@@ -52,14 +71,21 @@ public class PlayGame extends HttpServlet {
 
     private void DisplayQuestion(final PrintWriter out, Question questionToShow) {
         if (questionToShow instanceof MultipleAnswersQuestion) {
+            out.println("<h3>Choose the correct answer: </h3>");
             MultipleAnswersQuestion question = (MultipleAnswersQuestion) questionToShow;
+            List<String> allAnswers = new ArrayList(question.getAllAnswers());
+            allAnswers.add(question.getAnswer());
+            Collections.shuffle(allAnswers);
             
-        } 
-        else if (questionToShow instanceof YesOrNoQuestion) {
-            YesOrNoQuestion question = (YesOrNoQuestion) questionToShow;
-
+            for (String currentAnswer : allAnswers)
+            {
+                out.println("<input type=\"radio\" name=\"" +
+                    NewQuestion.AnswerParameter + "\" value=\"" + 
+                    currentAnswer + "\">");
+            }
         } 
         else if (questionToShow instanceof OpenQuestion) {
+            out.println("<h3>Enter the answer: </h3>");
             OpenQuestion question = (OpenQuestion) questionToShow;
             out.println("<input type=\"text\" name=\"" +
                 NewQuestion.AnswerParameter + "\" size=\"100\">");

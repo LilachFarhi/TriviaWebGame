@@ -64,9 +64,8 @@ public class StartGame extends HttpServlet
         {
             request.setAttribute("Questions",selectedQuestions);
 
-            ServletContext context = request.getServletContext();
-            RequestDispatcher requestDispatcher = context.getRequestDispatcher("PlayGame");
-            requestDispatcher.forward(request, response);
+            RequestDispatcher rd = request.getRequestDispatcher("PlayGame");
+            rd.forward(request, response);
         }
         
         response.setContentType("text/html;charset=UTF-8");

@@ -1,16 +1,33 @@
+import java.io.FileNotFoundException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.servlet.annotation.WebServlet;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class PlayGame extends HttpServlet {
+
+@WebServlet(urlPatterns = {"/PlayGame"})
+public class PlayGame extends HttpServlet 
+{
+    private static final String TriviaDataFilePath = "src/TriviaData.txt";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, FileNotFoundException, ClassNotFoundException 
+    {
+        List<Question> questions = GetSelectedQuestions(request);
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        try (PrintWriter out = response.getWriter()) 
+        {
+            
+            /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
@@ -22,41 +39,58 @@ public class PlayGame extends HttpServlet {
             out.println("</html>");
         }
     }
+    
+    private List<Question> GetSelectedQuestions(HttpServletRequest request) throws IOException, FileNotFoundException, ClassNotFoundException
+    {
+        
+        //String relativeWebPath = "/STUFF/read.txt";
+        String absoluteDiskPath = getServletContext().getRealPath(TriviaDataFilePath);
+        String path = getServletContext().getRealPath("/");
+        DataManager.GetTriviaDataFromFile(path);
+        // Fahion
+        List<Question> selectedQuestions = new ArrayList<>();
+        Category[] allCategories = Category.values();
+        for (Category category : allCategories) 
+        {
+            String categoryName = category.name();
+            
+            String selectedCategory = request.getParameter(categoryName);
+            String categoryDifficulty = request.getParameter(categoryName +"Difficulty");
+            
+            Map<Type, Map<QuestionDifficulty, List<Question>>> allQuestions = DataManager.triviaManager.getTriviaDataByDifficulty();
+            
+            if (!selectedCategory.equals("") && categoryDifficulty != null)
+            {
+               List<Question> questionsToAdd = allQuestions.get(Category.valueOf(selectedCategory)).get(QuestionDifficulty.valueOf(categoryDifficulty));
+               selectedQuestions.addAll(questionsToAdd);
+            }
+        }
+        
+        return selectedQuestions;
+    }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
+            throws ServletException, IOException, FileNotFoundException 
+    {
+        try {
+            processRequest(request, response);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(PlayGame.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
+            throws ServletException, IOException, FileNotFoundException {
+        try {
+            processRequest(request, response);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(PlayGame.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
     @Override
     public String getServletInfo() {
         return "Short description";

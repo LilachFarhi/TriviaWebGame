@@ -78,7 +78,7 @@ public class NewQuestion extends HttpServlet {
             out.println("<body>");
             out.println("<form action=\"AddQuestion\" method=\"GET\">");
             
-            if (errMessage != null) {
+            if (errMessage != null && !errMessage.equals("")) {
                 out.println("<h3 id=\"errorMessage\">There are validation errors: "
                         + errMessage + "</h3>");
             }

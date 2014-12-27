@@ -1,10 +1,8 @@
 import java.io.FileNotFoundException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.servlet.annotation.WebServlet;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -17,12 +15,12 @@ import javax.servlet.http.HttpServletResponse;
 
 public class StartGame extends HttpServlet 
 {
-
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, FileNotFoundException, ClassNotFoundException 
     {
         String path = getServletContext().getRealPath("/");
-        Map<Category, Map<QuestionDifficulty, List<Question>>> allQuestions = DataManager.GetDataByCategoryAndDifficulty(path);
+        Map<Category, Map<QuestionDifficulty, List<Question>>> allQuestions = 
+                DataManager.GetDataByCategoryAndDifficulty(path);
         
         List<Question> selectedQuestions = new ArrayList<>();
         List<Category> categoriesWithoutDifficulty = new ArrayList<>();
@@ -36,7 +34,6 @@ public class StartGame extends HttpServlet
             
             String selectedCategory = request.getParameter(categoryName);
             String categoryDifficulty = request.getParameter(categoryName +"Difficulty");
-            
             
             if ((selectedCategory != null && !selectedCategory.equals("")) && categoryDifficulty != null)
             {
@@ -57,28 +54,27 @@ public class StartGame extends HttpServlet
         if (difficultiesWithoudCategory.isEmpty() && categoriesWithoutDifficulty.isEmpty() 
                 && !selectedQuestions.isEmpty()) 
         {
-           
             request.setAttribute("Questions",selectedQuestions);
 
-            ServletContext context=request.getServletContext();
-            RequestDispatcher requestDispatcher=context.getRequestDispatcher("/PlayGame");
-            requestDispatcher.forward(request,response);
+            ServletContext context = request.getServletContext();
+            RequestDispatcher requestDispatcher = context.getRequestDispatcher("PlayGame");
+            requestDispatcher.forward(request, response);
         }
         
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) 
         {
-            
-            /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
             out.println("<link rel=\"stylesheet\" href=\"Main.css\"/>");
-            out.println("<title>PlayGame</title>");            
+            out.println("<title>Start Game</title>");            
             out.println("</head>");
             out.println("<body>");
             
-            if (selectedQuestions.isEmpty() && categoriesWithoutDifficulty.isEmpty() && difficultiesWithoudCategory.isEmpty()) 
+            if (selectedQuestions.isEmpty() && 
+                categoriesWithoutDifficulty.isEmpty() && 
+                difficultiesWithoudCategory.isEmpty()) 
             {
                  out.println("<img src=\"oops.jpg\">");
                  out.println("<h1 id=\"errorMessage\">Please chose categories and difficulties </h1>");
@@ -94,6 +90,7 @@ public class StartGame extends HttpServlet
                     {
                         out.println("<li>" + category.name() + "</li>");
                     });
+                    
                     out.println("</ul>");
                 }
                 if (!difficultiesWithoudCategory.isEmpty()) 
@@ -106,8 +103,8 @@ public class StartGame extends HttpServlet
                     });
                     out.println("</ul>");
                 }
-                
             }
+            
             out.println("<img src=\"Error.png\">");
             out.println("</body>");
             out.println("</html>");

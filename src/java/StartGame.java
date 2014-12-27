@@ -26,6 +26,7 @@ public class StartGame extends HttpServlet
         List<Category> categoriesWithoutDifficulty = new ArrayList<>();
         List<Category> difficultiesWithoudCategory = new ArrayList<>();
         
+        
         Category[] allCategories = Category.values();
         
         for (Category category : allCategories) 
@@ -37,9 +38,17 @@ public class StartGame extends HttpServlet
             
             if ((selectedCategory != null && !selectedCategory.equals("")) && categoryDifficulty != null)
             {
-               List<Question> questionsToAdd = allQuestions.get(Category.valueOf(selectedCategory)).
+                List<Question> questionsToAdd  = new ArrayList<>();
+                try
+                {
+                   questionsToAdd = allQuestions.get(Category.valueOf(selectedCategory)).
                        get(QuestionDifficulty.valueOf(categoryDifficulty));
-               selectedQuestions.addAll(questionsToAdd);
+                }
+                catch(IllegalArgumentException exception)
+                {
+                            
+                }
+                selectedQuestions.addAll(questionsToAdd);
             }
             else if((selectedCategory != null && !selectedCategory.equals("")) && categoryDifficulty == null)
             {

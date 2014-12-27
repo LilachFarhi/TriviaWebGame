@@ -11,23 +11,27 @@ public class RemoveQuestion extends HttpServlet {
             throws ServletException, IOException {
         String path = getServletContext().getRealPath("/");
         
-        try 
-        {
-            DataManager.GetAllQuestions(path);
-        }
-        catch (IOException | ClassNotFoundException ex) 
-        {
-            
-        }
-        
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet RemoveQuestion</title>");            
+            out.println("<title>Remove Question</title>");            
             out.println("</head>");
             out.println("<body>");
+            
+            try 
+            {
+                DataManager.GetAllQuestions(path);
+            }
+            catch (IOException | ClassNotFoundException ex) 
+            {
+                out.println("<h3 id=\"errorMessage\">"
+                        + DataManager.GetErrorMessage(ex, path + "\\" + DataManager.TriviaDataFileName) 
+                        + "</h3>");
+            }
+        
+        
             out.println("<h1>Servlet RemoveQuestion at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");

@@ -51,7 +51,7 @@ public class DataManager {
         triviaManager = new TriviaManager(fileManager.GetAllDataFromFile());
     }
     
-    private static String GetErrorMessage(Exception ex, String path)
+    public static String GetErrorMessage(Exception ex, String path)
     {
         return ("An error occurred while trying to connect "
                 + "to the trivia data file : \'" + path

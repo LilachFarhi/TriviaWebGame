@@ -1,25 +1,60 @@
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class CheckQuestionAnswer extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet CheckQuestionAnswer</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet CheckQuestionAnswer at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        HttpSession session = request.getSession();
+        String firstName = (String) session.getAttribute(Login.FirstNameAttribute);
+        String lastName = (String) session.getAttribute(Login.LastNameAttribute);
+        
+        Question question = (Question)request.getAttribute(PlayGame.PreviousAskedQuestionAttribute);
+        String userAnswer = request.getParameter(NewQuestion.AnswerParameter);
+        
+        if (userAnswer == null || userAnswer.equals(""))
+        {
+            if (question instanceof MultipleAnswersQuestion) {
+                request.setAttribute(PlayGame.ErrorMessageAttribute, "Please choose your answer");
+            }
+            else if (question instanceof OpenQuestion) {
+                request.setAttribute(PlayGame.ErrorMessageAttribute, "Please enter your answer");
+            }
+            
+            RequestDispatcher rd = request.getRequestDispatcher("PlayGame");
+            rd.forward(request, response);
+        }
+        else
+        {
+            response.setContentType("text/html;charset=UTF-8");
+            try (PrintWriter out = response.getWriter()) {
+                out.println("<!DOCTYPE html>");
+                out.println("<html>");
+                out.println("<head>");
+                out.println("<link rel=\"stylesheet\" href=\"Main.css\"/>");
+                out.println("<title>Checking your answer</title>");            
+                out.println("</head>");
+                out.println("<body>");
+                out.println("<h2> Current player: " + firstName + " " + lastName + "</h2>");
+                
+                if (userAnswer.equalsIgnoreCase(question.getAnswer()))
+                {
+                    
+                }
+                else
+                {
+                    
+                }
+                
+                out.println("</body>");
+                out.println("</html>");
+            }
         }
     }
 

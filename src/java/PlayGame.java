@@ -12,12 +12,15 @@ import javax.servlet.http.HttpSession;
 
 public class PlayGame extends HttpServlet {
 
+    public static final String ErrorMessageAttribute = "ErrorMessage";
+    public static final String PreviousAskedQuestionAttribute = "PreviousAskedQuestion";
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         String firstName = (String) session.getAttribute(Login.FirstNameAttribute);
         String lastName = (String) session.getAttribute(Login.LastNameAttribute);
-        Object errMessage = request.getAttribute("ErrorMessage");
+        Object errMessage = request.getAttribute(ErrorMessageAttribute);
 
         List<Question> questionsToShow = (List<Question>) request.getAttribute("AllQuestions");
         Collections.shuffle(questionsToShow);
@@ -27,6 +30,7 @@ public class PlayGame extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
+            out.println("<link rel=\"stylesheet\" href=\"Main.css\"/>");
             out.println("<title>Play Game</title>");
             out.println("</head>");
             out.println("<body>");
@@ -50,11 +54,11 @@ public class PlayGame extends HttpServlet {
                     question = questionsToShow.get(0);
                     questionsToShow.remove(0);
                     request.setAttribute("AllQuestions", questionsToShow);
-                    request.setAttribute("PreviousAskedQuestion", question);
+                    request.setAttribute(PreviousAskedQuestionAttribute, question);
                 }
                 else
                 {
-                    question = (Question)request.getAttribute("PreviousAskedQuestion");
+                    question = (Question)request.getAttribute(PreviousAskedQuestionAttribute);
                 }
                 
                 out.println("<h3> Question: " + question.getQuestion() + "</h3><br>");

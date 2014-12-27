@@ -51,7 +51,7 @@ public class DataManager {
         triviaManager = new TriviaManager(fileManager.GetAllDataFromFile());
     }
     
-    private static String GetErrorMessage(Exception ex, String path)
+    public static String GetErrorMessage(Exception ex, String path)
     {
         return ("An error occurred while trying to connect "
                 + "to the trivia data file : \'" + path
@@ -80,6 +80,14 @@ public class DataManager {
             }
         }
 
+        return allQuestions;
+    }
+    
+    public static List<Object> GetAllQuestions(String path) throws IOException, 
+            FileNotFoundException, ClassNotFoundException
+    {
+        GetTriviaDataFromFile(path + "\\" + TriviaDataFileName);
+        List<Object> allQuestions = GetAllQuestionsForSave(triviaManager.getTriviaDataByDifficulty());
         return allQuestions;
     }
 }

@@ -74,7 +74,7 @@ public class StartGame extends HttpServlet
         }
         
         if (difficultiesWithoudCategory.isEmpty() && categoriesWithoutDifficulty.isEmpty()
-             && noQuestionsInCategoryAndDifficulty.isEmpty()  && !selectedQuestions.isEmpty()) 
+             &&  noQuestionsInCategoryAndDifficulty.isEmpty()  && !selectedQuestions.isEmpty()) 
         {
             session.setAttribute(AllQuestionsAttribute, selectedQuestions);
 
@@ -96,7 +96,7 @@ public class StartGame extends HttpServlet
             if (selectedQuestions.isEmpty() && categoriesWithoutDifficulty.isEmpty() &&
                 noQuestionsInCategoryAndDifficulty.isEmpty() && difficultiesWithoudCategory.isEmpty()) 
             {
-                 out.println("<img src=\"oops.jpg\" width=\"150\" height=\"150\" >");
+                 out.println("<img src=\"oops.jpg\" width=\"300\" height=\"150\" >");
                  out.println("<h1 id=\"errorMessage\">Please chose categories and difficulties </h1>");
             }
             else

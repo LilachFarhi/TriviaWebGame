@@ -2,6 +2,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -27,18 +28,18 @@ public class DataManager {
         }
     }
     
-    public static String RemoveQuestionFromTriviaData(Question questionToRemove, String path)
+    public static String RemoveQuestionFromTriviaData(Question questionToRemove, String path) 
     {
         try 
         {
-            GetTriviaDataFromFile(path + "\\" + TriviaDataFileName);
+            //GetTriviaDataFromFile(path + "\\" + TriviaDataFileName);
             triviaManager.DeleteQuestion(questionToRemove);
             
             List<Object> allQuestions = GetAllQuestionsForSave(triviaManager.getTriviaDataByDifficulty());
             fileManager.WriteAllDataToFile(allQuestions);
             return "";
         }
-        catch (IOException | ClassNotFoundException ex) 
+        catch (IOException ex) 
         {
             return GetErrorMessage(ex, path + "\\" + TriviaDataFileName);
         }
@@ -89,5 +90,27 @@ public class DataManager {
         GetTriviaDataFromFile(path + "\\" + TriviaDataFileName);
         List<Object> allQuestions = GetAllQuestionsForSave(triviaManager.getTriviaDataByDifficulty());
         return allQuestions;
+    }
+    
+    public static boolean isMapByCategoryAndDifficultyEmpty(Map<Category, Map<QuestionDifficulty, List<Question>>>  map)
+    {
+        boolean isEmpty = true;
+        
+        for (Map.Entry<Category, Map<QuestionDifficulty, List<Question>>> categoryEntry : map.entrySet())
+        {
+            if (!categoryEntry.getValue().isEmpty()) 
+            {
+                for (Map.Entry<QuestionDifficulty, List<Question>> difficultyEntry : categoryEntry.getValue().entrySet()) 
+                {
+                    if (!difficultyEntry.getValue().isEmpty())
+                    {
+                        isEmpty = false;
+                        break;
+                    }
+                }
+            }
+            
+        }
+        return isEmpty;
     }
 }

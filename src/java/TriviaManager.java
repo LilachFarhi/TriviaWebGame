@@ -65,7 +65,7 @@ public class TriviaManager {
     {
         for (Object currentObject : triviaData)
         {
-            if (currentObject instanceof MultipleAnswersQuestion)
+            if (currentObject.getClass().equals(MultipleAnswersQuestion.class))
             {
                 MultipleAnswersQuestion question = 
                         (MultipleAnswersQuestion)currentObject;
@@ -74,7 +74,7 @@ public class TriviaManager {
                 triviaDataByCategory.get(MultipleAnswersQuestion.class)
                         .get(question.getCategory()).add(question);
             }
-            else if (currentObject instanceof YesOrNoQuestion)
+            else if (currentObject.getClass().equals(YesOrNoQuestion.class))
             {
                 YesOrNoQuestion question = 
                         (YesOrNoQuestion)currentObject;
@@ -83,7 +83,7 @@ public class TriviaManager {
                 triviaDataByCategory.get(YesOrNoQuestion.class)
                         .get(question.getCategory()).add(question);
             }
-            else if (currentObject instanceof OpenQuestion)
+            else if (currentObject.getClass().equals(OpenQuestion.class))
             {
                 OpenQuestion question = 
                         (OpenQuestion)currentObject;
@@ -164,41 +164,41 @@ public class TriviaManager {
     
      public void DeleteQuestion(Question questionToDelete)
     {   
-        if (questionToDelete instanceof MultipleAnswersQuestion)
+        if (questionToDelete.getClass().equals(MultipleAnswersQuestion.class))
         {
             triviaDataByDifficulty.get(MultipleAnswersQuestion.class).get(questionToDelete.getDifficulty()).remove(questionToDelete);
             triviaDataByCategory.get(MultipleAnswersQuestion.class).get(questionToDelete.getCategory()).remove(questionToDelete);
         }
-        else if (questionToDelete instanceof YesOrNoQuestion)
+        else if (questionToDelete.getClass().equals(YesOrNoQuestion.class))
         {
             triviaDataByDifficulty.get(YesOrNoQuestion.class).get(questionToDelete.getDifficulty()).remove(questionToDelete);
             triviaDataByCategory.get(YesOrNoQuestion.class).get(questionToDelete.getCategory()).remove(questionToDelete);
         }
-        else if (questionToDelete instanceof OpenQuestion)
+        else if (questionToDelete.getClass().equals(OpenQuestion.class))
         {
            triviaDataByDifficulty.get(OpenQuestion.class).get(questionToDelete.getDifficulty()).remove(questionToDelete);
            triviaDataByCategory.get(OpenQuestion.class).get(questionToDelete.getCategory()).remove(questionToDelete);
         }
         
         triviaDataByCategoryAndDifficulty.get(questionToDelete.getCategory())
-                .get(questionToDelete.getDifficulty()).add(questionToDelete);
+                .get(questionToDelete.getDifficulty()).remove(questionToDelete);
     }
 
     private void AddQuestionToTriviaData(Question currentObject) 
     {
-        if (currentObject instanceof MultipleAnswersQuestion)
+        if (currentObject.getClass().equals(MultipleAnswersQuestion.class))
         {
             MultipleAnswersQuestion question = (MultipleAnswersQuestion)currentObject;
             triviaDataByDifficulty.get(MultipleAnswersQuestion.class).get(question.getDifficulty()).add(question);
             triviaDataByCategory.get(MultipleAnswersQuestion.class).get(question.getCategory()).add(question);
         }
-        else if (currentObject instanceof YesOrNoQuestion)
+        else if (currentObject.getClass().equals(YesOrNoQuestion.class))
         {
             YesOrNoQuestion question = (YesOrNoQuestion)currentObject;
             triviaDataByDifficulty.get(YesOrNoQuestion.class).get(question.getDifficulty()).add(question);
             triviaDataByCategory.get(YesOrNoQuestion.class).get(question.getCategory()).add(question);
         }
-        else if (currentObject instanceof OpenQuestion)
+        else if (currentObject.getClass().equals(OpenQuestion.class))
         {
             OpenQuestion question = (OpenQuestion)currentObject;
             triviaDataByDifficulty.get(OpenQuestion.class).get(question.getDifficulty()).add(question);

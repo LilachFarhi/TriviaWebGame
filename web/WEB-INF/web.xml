@@ -36,6 +36,10 @@
         <servlet-name>FinishGame</servlet-name>
         <servlet-class>FinishGame</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>DeleteQuestion</servlet-name>
+        <servlet-class>DeleteQuestion</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>NewQuestion</servlet-name>
         <url-pattern>/NewQuestion</url-pattern>
@@ -71,6 +75,10 @@
     <servlet-mapping>
         <servlet-name>FinishGame</servlet-name>
         <url-pattern>/FinishGame</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteQuestion</servlet-name>
+        <url-pattern>/DeleteQuestion</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

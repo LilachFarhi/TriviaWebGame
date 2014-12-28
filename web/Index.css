@@ -1,0 +1,100 @@
+body 
+{
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 80%;
+    font-weight: bold;
+    background: #FFF;
+}
+ 
+h1  
+{
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:50px;
+	font-weight:bold;
+	margin:0;
+	padding:0;
+        text-align: center;
+}
+
+hr 
+{
+	border:none;
+	border-top:1px solid #CCCCCC;
+	height:1px;
+	margin-bottom:25px;
+}
+
+ul 
+{
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+	
+#menu 
+{
+	width: 200px;
+	margin: 10px;
+}
+	
+#menu li a 
+{
+  	voice-family: inherit;
+  	height: 24px;
+	text-decoration: none;
+}	
+	
+#menu li a:link, #menu li a:visited 
+{
+	color: #C7377D;
+	display: block;
+	background:  url(menu.gif);
+	padding: 8px 0 0 10px;
+}
+	
+#menu li a:hover 
+{
+	color: #C7377D;
+	background:  url(menu.gif) 0 -32px;
+	padding: 8px 0 0 10px;
+}
+
+#header {
+    background-color:#C7377D;
+    color:white;
+    text-align:center;
+    padding:5px;
+    height: 150px;
+    vertical-align: central;
+    border-bottom: 3px solid #D9DDEB;
+}
+
+#nav {
+    line-height:30px;
+    background-color: #D9DDEB;
+    height:700px;
+    width:250px;
+    float:left;
+    padding:5px; 
+}
+#section {
+    width: 1000px;
+    height:700px;
+    float:left;
+}
+
+#section iframe
+{
+    height:700px;
+    width: 1000px
+}
+
+#footer {
+    background-color:#C7377D;
+    color:white;
+    clear:both;
+    text-align:center;
+    padding:5px; 
+    height : 50px;
+    border-top: 3px solid #D9DDEB;
+}

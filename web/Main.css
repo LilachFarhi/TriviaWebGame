@@ -1,48 +1,57 @@
 /** BASIC */
 
-body {
+body 
+{
 	margin: 10px 0px;
 	padding: 0px;
 	font-family: Verdana, Arial, Helvetica, sans-serif;
         text-align: center
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1, h2, h3, h4, h5, h6 
+{
 	margin-top: 0px;
 	font-family: "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
 	font-weight: normal;
 	color: #D51D71;
 }
 
-#errorMessage {
+#errorMessage
+{
     color: red;
 }
 
-#wrongAnswer {
+#wrongAnswer 
+{
     color: #cc0000;
 }
 
-#correctAnswer {
+#correctAnswer 
+{
     color: green;
 }
 
-p, ul, ol {
+p, ul, ol 
+{
 	line-height: 1.6em;
 	font-size: .8em;
 	color: #333333;
 }
 
-a {
+a 
+{
 	text-decoration: none;
 	font-weight: bold;
 	color: #D51D71;
 }
 
-a:hover {
+a:hover 
+{
 	text-decoration: underline;
 }
 
-.vline {
+.vline 
+{
 	margin: 0px -20px;
 	padding: 20px 20px 0px 20px;
 	border-top: 3px solid #D9DDEB;
@@ -50,7 +59,8 @@ a:hover {
 
 /** WRAPPER */
 
-#wrapper {
+#wrapper 
+{
 	width: 700px;
 	margin: 0px auto;
 	border: 3px solid #D9DDEB;
@@ -58,13 +68,15 @@ a:hover {
 
 /** HEADER */
 
-#header {
+#header 
+{
 	height: 100px;
 	background-color: #FFFFFF;
 	border-bottom: 3px solid #D9DDEB;
 }
 
-#header h1 {
+#header h1 
+{
 	float: left;
 	margin: 0px;
 	padding: 20px 0px 0px 20px;
@@ -72,45 +84,25 @@ a:hover {
 	font-size: 2.6em;
 }
 
-#header h2 {
+#header h2
+{
 	float: right;
 	margin: 0px;
 	padding: 36px 20px 0px 0px;
 }
 
-/** MENU */
-
-#menu {
-	background-color: #D9DDEB;
-	border-bottom: 3px solid #D9DDEB;
-}
-
-#menu ul {
-	margin: 0px;
-	padding: 0px;
-	list-style: none;
-}
-
-#menu li {
-	display: inline;
-}
-
-#menu a {
-	padding-left: 20px;
-}
-
 /** CONTENT */
 
-#content {
-}
 
-#left {
+#left 
+{
 	float: left;
 	width: 410px;
 	padding: 20px;
 }
 
-#right {
+#right 
+{
 	float: right;
 	width: 207px;
 	padding: 20px;
@@ -118,12 +110,14 @@ a:hover {
 
 /** FOOTER */
 
-#footer {
+#footer 
+{
 	background-color: #FFFFFF;
 	border-top: 3px solid #D9DDEB;
 }
 
-#footer p {
+#footer p
+{
 	margin: 0px;
 	padding: 0px 0px 0px 10px;
 	font-size: .6em;

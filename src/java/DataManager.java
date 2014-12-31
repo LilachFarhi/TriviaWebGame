@@ -2,7 +2,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -28,18 +27,23 @@ public class DataManager {
         }
     }
     
-    public static String RemoveQuestionFromTriviaData(Question questionToRemove, String path) 
+    public static String RemoveQuestionFromTriviaData(Question questionToRemove, 
+            String path, boolean initializeNeeded) 
     {
         try 
         {
-            //GetTriviaDataFromFile(path + "\\" + TriviaDataFileName);
+            if (initializeNeeded)
+            {
+                GetTriviaDataFromFile(path + "\\" + TriviaDataFileName);
+            }
+            
             triviaManager.DeleteQuestion(questionToRemove);
             
             List<Object> allQuestions = GetAllQuestionsForSave(triviaManager.getTriviaDataByDifficulty());
             fileManager.WriteAllDataToFile(allQuestions);
             return "";
         }
-        catch (IOException ex) 
+        catch (IOException | ClassNotFoundException ex) 
         {
             return GetErrorMessage(ex, path + "\\" + TriviaDataFileName);
         }

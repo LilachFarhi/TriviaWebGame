@@ -7,12 +7,15 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class RemoveQuestion extends HttpServlet {
-
+    public static final String AllQuestionsAttribute = "AllQuestions";
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String path = getServletContext().getRealPath("/");
+        HttpSession session = request.getSession();
         
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) 
@@ -51,16 +54,19 @@ public class RemoveQuestion extends HttpServlet {
                 List<Question> allQuestions = new ArrayList<>();
                 allListQuestions.stream().forEach((allListQuestion) -> { allQuestions.addAll(allListQuestion); });
 
-                out.println("<h1> Please Chose a question to delete</h1>");
+                session.setAttribute(AllQuestionsAttribute, allQuestions);
+                
+                out.println("<h1> Please choose a question to delete</h1>");
                 out.println("<form action=\"DeleteQuestion\" method=\"GET\"");
-                //out.println("<ol>");
-                for (Question allQuestion : allQuestions)
+                
+                for (int i = 0; i < allQuestions.size(); i++) 
                 {
                     out.println("<div>");
-                    out.println("<input type=\"radio\" name=\"Question\" value=\"" + allQuestion.getCategory().name() + ","
-                            + allQuestion.getDifficulty().name() + "," + allQuestion.getQuestion() + "\">" + allQuestion.getQuestion());
+                    out.println("<input type=\"radio\" name=\"Question\" value=\"" + i + "\">" + 
+                            allQuestions.get(i).getQuestion());
                     out.println("</div>");
                 }
+                
                 out.println("<div><input type=\"submit\" value=\"Delete\">  </div>");
                 out.println("</form>");
             }

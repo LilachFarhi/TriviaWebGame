@@ -67,7 +67,7 @@ public class RemoveQuestion extends HttpServlet {
                     out.println("</div>");
                 }
                 
-                out.println("<div><input type=\"submit\" value=\"Delete\">  </div>");
+                out.println("<br><div><input type=\"submit\" value=\"Delete\"></div>");
                 out.println("</form>");
             }
             out.println("</body>");

@@ -30,11 +30,11 @@ public class ValidateUserData extends HttpServlet {
         {
             if (rememberMe != null && rememberMe.equals(Login.RememberMeParameterCheckedValue))
             {
-                Cookie firstNameCookie = new Cookie(Login.FirstNameAttribute, "firstName");
+                Cookie firstNameCookie = new Cookie(Login.FirstNameAttribute, firstName);
                 firstNameCookie.setMaxAge(60*60*24*7);
                 response.addCookie(firstNameCookie);
 
-                Cookie lastNameCookie = new Cookie(Login.LastNameAttribute, "lastName");
+                Cookie lastNameCookie = new Cookie(Login.LastNameAttribute, lastName);
                 lastNameCookie.setMaxAge(60*60*24*7);
                 response.addCookie(lastNameCookie);
             }

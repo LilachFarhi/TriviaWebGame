@@ -148,6 +148,7 @@ public class StartGame extends HttpServlet
             }
             
             out.println("<img src=\"Error.png\" width=\"150\" height=\"150\" >");
+            out.println("<br><br><a href=\"StartGame.html\">Back</a>");
             out.println("</body>");
             out.println("</html>");
         }

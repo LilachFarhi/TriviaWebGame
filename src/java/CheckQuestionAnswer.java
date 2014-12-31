@@ -1,5 +1,6 @@
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Map;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -43,11 +44,25 @@ public class CheckQuestionAnswer extends HttpServlet {
                 out.println("<body>");
                 out.println("<h2> Current player: " + firstName + " " + lastName + "</h2>");
                 
+                Map<Category, Integer> questionsAsked = 
+                            (Map<Category, Integer>)session.getAttribute(StartGame.QuestionsAskedByCategoryAttribute);
+                questionsAsked.put(question.getCategory(), questionsAsked.get(question.getCategory()) + 1);
+                session.setAttribute(StartGame.QuestionsAskedByCategoryAttribute, questionsAsked);
+                
                 if (userAnswer.equalsIgnoreCase(question.getAnswer()))
                 {
                     out.println("<img src=\"CorrectAnswer.jpg\" width=\"100\" height=\"100\"></img><br>");
                     out.println("<h3 id=\"correctAnswer\">Your answer is correct!</h3>");
                     out.println("<img src=\"CorrectAnswer2.jpg\" width=\"100\" height=\"100\"></img>");
+                    
+                    Integer score = (Integer)session.getAttribute(StartGame.FinalScoreAttribute);
+                    session.setAttribute(StartGame.FinalScoreAttribute, 
+                            score + question.getDifficulty().ordinal() + 1);
+                    
+                    Map<Category, Integer> questionsCorrect = 
+                            (Map<Category, Integer>)session.getAttribute(StartGame.QuestionsCorrectByCategoryAttribute);
+                    questionsCorrect.put(question.getCategory(), questionsCorrect.get(question.getCategory()) + 1);
+                    session.setAttribute(StartGame.QuestionsCorrectByCategoryAttribute, questionsCorrect);
                 }
                 else
                 {
@@ -57,7 +72,7 @@ public class CheckQuestionAnswer extends HttpServlet {
                     out.println("<img src=\"WrongAnswer2.jpg\" width=\"100\" height=\"100\"></img>");
                 }
                 
-                out.println("<a href=\"PlayGame\">Next Question</a><br>");
+                out.println("<br><br><a href=\"PlayGame\">Next Question</a><br><br><br>");
                 out.println("<form action=\"FinishGame\" method=\"GET\">");
                 out.println("<input type=\"submit\" value=\"FinishGame\">");
                 out.println("</form>");

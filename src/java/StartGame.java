@@ -17,6 +17,9 @@ import javax.servlet.http.HttpSession;
 public class StartGame extends HttpServlet 
 {
     public static final String AllQuestionsAttribute = "AllQuestions";
+    public static final String QuestionsAskedByCategoryAttribute = "QuestionsAsked";
+    public static final String QuestionsCorrectByCategoryAttribute = "QuestionsCorrect";
+    public static final String FinalScoreAttribute = "score";
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, FileNotFoundException, ClassNotFoundException 
@@ -28,10 +31,12 @@ public class StartGame extends HttpServlet
         
         List<Question> selectedQuestions = new ArrayList<>();
         List<Category> categoriesWithoutDifficulty = new ArrayList<>();
-        List<Category> difficultiesWithoudCategory = new ArrayList<>();
+        List<Category> difficultiesWithoutCategory = new ArrayList<>();
         Map<Category, QuestionDifficulty> noQuestionsInCategoryAndDifficulty = new HashMap<Category, QuestionDifficulty>() {};
+        Map<Category, Integer> categoriesChosenToQuestionsAsked = new HashMap<Category, Integer>();
+        Map<Category, Integer> categoriesChosenToQuestionsCorrect = new HashMap<Category, Integer>();
         
-            Category[] allCategories = Category.values();
+        Category[] allCategories = Category.values();
         
         for (Category category : allCategories) 
         {
@@ -56,6 +61,8 @@ public class StartGame extends HttpServlet
                 if (!questionsToAdd.isEmpty()) 
                 {
                     selectedQuestions.addAll(questionsToAdd);
+                    categoriesChosenToQuestionsAsked.put(Category.valueOf(selectedCategory), 0);
+                    categoriesChosenToQuestionsCorrect.put(Category.valueOf(selectedCategory), 0);
                 }
                 else
                 {
@@ -69,14 +76,17 @@ public class StartGame extends HttpServlet
             }
             else if((selectedCategory == null  || selectedCategory.equals("")) && categoryDifficulty != null)
             {
-                difficultiesWithoudCategory.add(category);
+                difficultiesWithoutCategory.add(category);
             }
         }
         
-        if (difficultiesWithoudCategory.isEmpty() && categoriesWithoutDifficulty.isEmpty()
+        if (difficultiesWithoutCategory.isEmpty() && categoriesWithoutDifficulty.isEmpty()
              &&  noQuestionsInCategoryAndDifficulty.isEmpty()  && !selectedQuestions.isEmpty()) 
         {
             session.setAttribute(AllQuestionsAttribute, selectedQuestions);
+            session.setAttribute(QuestionsAskedByCategoryAttribute, categoriesChosenToQuestionsAsked);
+            session.setAttribute(QuestionsCorrectByCategoryAttribute, categoriesChosenToQuestionsCorrect);
+            session.setAttribute(FinalScoreAttribute, 0);
 
             RequestDispatcher rd = request.getRequestDispatcher("PlayGame");
             rd.forward(request, response);
@@ -94,7 +104,7 @@ public class StartGame extends HttpServlet
             out.println("<body>");
             
             if (selectedQuestions.isEmpty() && categoriesWithoutDifficulty.isEmpty() &&
-                noQuestionsInCategoryAndDifficulty.isEmpty() && difficultiesWithoudCategory.isEmpty()) 
+                noQuestionsInCategoryAndDifficulty.isEmpty() && difficultiesWithoutCategory.isEmpty()) 
             {
                  out.println("<img src=\"oops.jpg\" width=\"300\" height=\"150\" >");
                  out.println("<h1 id=\"errorMessage\">Please chose categories and difficulties </h1>");
@@ -113,17 +123,17 @@ public class StartGame extends HttpServlet
                     
                     out.println("</ul>");
                 }
-                if (!difficultiesWithoudCategory.isEmpty()) 
+                if (!difficultiesWithoutCategory.isEmpty()) 
                 {
                     out.println("<h1 id=\"errorMessage\">For these categories you only selected difficulty </h1>");
                     out.println("<ul id=\"errorMessage\">");
-                    difficultiesWithoudCategory.stream().forEach((category) -> 
+                    difficultiesWithoutCategory.stream().forEach((category) -> 
                     {
                         out.println("<li> <h2>" + category.name() + "</h2> </li>");
                     });
                     out.println("</ul>");
                 }
-                if (categoriesWithoutDifficulty.isEmpty() && difficultiesWithoudCategory.isEmpty()
+                if (categoriesWithoutDifficulty.isEmpty() && difficultiesWithoutCategory.isEmpty()
                         && !noQuestionsInCategoryAndDifficulty.isEmpty()) 
                 {
                     out.println("<h1 id=\"errorMessage\">For these categories and difficulties we don't have questions </h1>");

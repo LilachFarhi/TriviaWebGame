@@ -68,7 +68,7 @@ public class PlayGame extends HttpServlet {
 
                 DisplayQuestion(out, question);
 
-                out.println("<input type=\"submit\" value=\"Submit\">");
+                out.println("<br><input type=\"submit\" value=\"Submit\">");
                 out.println("</form><br>");
                 out.println("<form action=\"FinishGame\" method=\"GET\">");
                 out.println("<input type=\"submit\" value=\"FinishGame\">");
@@ -83,7 +83,7 @@ public class PlayGame extends HttpServlet {
         if (questionToShow instanceof MultipleAnswersQuestion) {
             out.println("<h3>Choose the correct answer: </h3>");
             MultipleAnswersQuestion question = (MultipleAnswersQuestion) questionToShow;
-            List<String> allAnswers = new ArrayList(question.getAllAnswers());
+            List<String> allAnswers = new ArrayList(question.getWrongAnswers());
             allAnswers.add(question.getAnswer());
             Collections.shuffle(allAnswers);
             
@@ -91,14 +91,14 @@ public class PlayGame extends HttpServlet {
             {
                 out.println("<input type=\"radio\" name=\"" +
                     NewQuestion.AnswerParameter + "\" value=\"" + 
-                    currentAnswer + "\">");
+                    currentAnswer + "\">" + currentAnswer + "<br>");
             }
         } 
         else if (questionToShow instanceof OpenQuestion) {
             out.println("<h3>Enter the answer: </h3>");
             OpenQuestion question = (OpenQuestion) questionToShow;
             out.println("<input type=\"text\" name=\"" +
-                NewQuestion.AnswerParameter + "\" size=\"75\">");
+                NewQuestion.AnswerParameter + "\" size=\"75\"><br>");
         }
     }
 

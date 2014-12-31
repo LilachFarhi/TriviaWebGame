@@ -137,12 +137,12 @@ public class AddQuestion extends HttpServlet {
                 questionToAdd = new OpenQuestion(question, answer,
                         questionDifficulty, questionCategory);
                 break;
-            case NewQuestion.MultipleAnswerQuestionParameter:
-                questionToAdd = new MultipleAnswersQuestion(question, wrongAnswers, answer,
-                        questionDifficulty, questionCategory);
-                break;
             case NewQuestion.YesOrNoQuestionParameter:
                 questionToAdd = new YesOrNoQuestion(question, ConvertBooleanAnswer(answer),
+                        questionDifficulty, questionCategory);
+                break;
+            case NewQuestion.MultipleAnswerQuestionParameter:
+                questionToAdd = new MultipleAnswersQuestion(question, wrongAnswers, answer,
                         questionDifficulty, questionCategory);
                 break;
             default:

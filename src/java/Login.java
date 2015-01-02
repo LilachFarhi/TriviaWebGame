@@ -64,6 +64,7 @@ public class Login extends HttpServlet {
                 out.println("</head>");
                 out.println("<body>");
                 out.println("<form action=\"ValidateUserData\" method=\"GET\">");
+                out.println("<img src=\"Welcome.png\" height=\"400\" width=\"800\"/><br><br>");
                 out.println("<h1>Please login to start the game</h1>");
                 out.println("<br>");
                 if (errMessage != null)

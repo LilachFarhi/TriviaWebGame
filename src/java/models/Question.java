@@ -2,10 +2,29 @@ package models;
 
 import java.io.Serializable;
 
-public abstract class Question implements Serializable {
+public class Question implements Serializable {
+    protected String question;
+    protected String answer;
+    protected Category category;
+    protected QuestionDifficulty difficulty;
     
-    public abstract String getQuestion();
-    public abstract String getAnswer();
-    public abstract Category getCategory();
-    public abstract QuestionDifficulty getDifficulty();
+    public String getQuestion() 
+    {
+        return question;
+    }
+
+    public String getAnswer() 
+    {
+        return answer;
+    }
+
+    public QuestionDifficulty getDifficulty() 
+    {
+        return difficulty;
+    }
+    
+    public Category getCategory() 
+    {
+        return category;
+    }
 }

@@ -24,8 +24,8 @@ public class PlayGame extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        String firstName = (String) session.getAttribute(Login.FirstNameAttribute);
-        String lastName = (String) session.getAttribute(Login.LastNameAttribute);
+        String firstName = "";
+        String lastName = "";
         Object errMessage = request.getAttribute(ErrorMessageAttribute);
 
         List<Question> questionsToShow = (List<Question>) session.getAttribute(StartGame.AllQuestionsAttribute);

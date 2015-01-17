@@ -16,8 +16,8 @@ public class FinishGame extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        String firstName = (String) session.getAttribute(Login.FirstNameAttribute);
-        String lastName = (String) session.getAttribute(Login.LastNameAttribute);
+        String firstName = "";
+        String lastName = "";
         Integer score = (Integer)session.getAttribute(StartGame.FinalScoreAttribute);
         Map<Category, Integer> questionsCorrect = 
                             (Map<Category, Integer>)session.getAttribute(StartGame.QuestionsCorrectByCategoryAttribute);

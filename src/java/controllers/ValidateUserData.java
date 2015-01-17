@@ -8,14 +8,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import models.Player;
 
 public class ValidateUserData extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        String firstName = request.getParameter(Login.FirstNameAttribute);
-        String lastName = request.getParameter(Login.LastNameAttribute);
+        String firstName = request.getParameter(Login.FirstNameCookieAttribute);
+        String lastName = request.getParameter(Login.LastNameCookieAttribute);
         String rememberMe = request.getParameter(Login.RememberMeParameter);
         String errorMessage = "";
         
@@ -32,17 +33,17 @@ public class ValidateUserData extends HttpServlet {
         {
             if (rememberMe != null && rememberMe.equals(Login.RememberMeParameterCheckedValue))
             {
-                Cookie firstNameCookie = new Cookie(Login.FirstNameAttribute, firstName);
+                Cookie firstNameCookie = new Cookie(Login.FirstNameCookieAttribute, firstName);
                 firstNameCookie.setMaxAge(60*60*24*7);
                 response.addCookie(firstNameCookie);
 
-                Cookie lastNameCookie = new Cookie(Login.LastNameAttribute, lastName);
+                Cookie lastNameCookie = new Cookie(Login.LastNameCookieAttribute, lastName);
                 lastNameCookie.setMaxAge(60*60*24*7);
                 response.addCookie(lastNameCookie);
             }
             
-            session.setAttribute(Login.FirstNameAttribute, firstName);
-            session.setAttribute(Login.LastNameAttribute, lastName);
+            Player currentPlayer = new Player(firstName, lastName);
+            session.setAttribute(Login.PlayerAttribute, currentPlayer);
             response.sendRedirect("StartGame.html");
         }
         else

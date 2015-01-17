@@ -13,9 +13,9 @@ import models.Player;
 public class Login extends HttpServlet {
 
     public static final String PlayerAttribute = "player";
-    public static final String FirstNameAttribute = "firstName";
+    public static final String FirstNameCookieAttribute = "firstName";
     public static final String ErrorMessageAttribute = "errorMessage";
-    public static final String LastNameAttribute = "lastName";
+    public static final String LastNameCookieAttribute = "lastName";
     public static final String RememberMeParameter = "rememberMe";
     public static final String RememberMeParameterCheckedValue = "true";
     
@@ -34,12 +34,12 @@ public class Login extends HttpServlet {
                     for(int i=0; i<cookies.length; i++) {
                         Cookie c = cookies[i];
 
-                        if ((c.getName().equals(FirstNameAttribute)))
+                        if ((c.getName().equals(FirstNameCookieAttribute)))
                         {
                             firstName = c.getValue();
                         }
 
-                        if ((c.getName().equals(LastNameAttribute)))
+                        if ((c.getName().equals(LastNameCookieAttribute)))
                         {
                             lastName = c.getValue();
                         }

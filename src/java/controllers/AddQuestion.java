@@ -8,7 +8,6 @@ import models.OpenQuestion;
 import models.MultipleAnswersQuestion;
 import models.YesOrNoQuestion;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -47,21 +46,7 @@ public class AddQuestion extends HttpServlet {
                 
                 if ("".equals(errorMessage))
                 {
-                    response.setContentType("text/html;charset=UTF-8");
-                    try (PrintWriter out = response.getWriter()) {
-                        out.println("<!DOCTYPE html>");
-                        out.println("<html>");
-                        out.println("<head>");
-                        out.println("<link rel=\"stylesheet\" href=\"Main.css\"/>");
-                        out.println("<title>New Question</title>");            
-                        out.println("</head>");
-                        out.println("<body>");
-                        out.println("<h1>Your question has been successfully added!</h1>");
-                        out.println("<br>");
-                        out.println("<img src=\"Triviaquestion.jpg\">");
-                        out.println("</body>");
-                        out.println("</html>");
-                    }
+                    response.sendRedirect("NewQuestionAdded.html");
                 }
             }
         }

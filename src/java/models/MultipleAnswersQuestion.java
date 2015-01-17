@@ -1,3 +1,5 @@
+package models;
+
 import java.util.List;
 
 public class MultipleAnswersQuestion extends Question {
@@ -19,26 +21,26 @@ public class MultipleAnswersQuestion extends Question {
     }
 
     @Override
-    String getQuestion() {
+    public String getQuestion() {
         return question;
     }
 
     @Override
-    String getAnswer() {
+    public String getAnswer() {
         return correctAnswer;
     }
 
     @Override
-    QuestionDifficulty getDifficulty() {
+    public QuestionDifficulty getDifficulty() {
         return difficulty;
     }
 
     @Override
-    Category getCategory() {
+    public Category getCategory() {
         return category;
     }
     
-    List<String> getWrongAnswers() {
+    public List<String> getWrongAnswers() {
         return wrongAnswers;
     }
 }

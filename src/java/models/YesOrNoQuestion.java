@@ -1,3 +1,5 @@
+package models;
+
 import java.util.Arrays;
 
 public class YesOrNoQuestion extends MultipleAnswersQuestion {

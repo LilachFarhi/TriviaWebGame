@@ -1,3 +1,5 @@
+package models;
+
 public class OpenQuestion extends Question {
     
     private String question;
@@ -15,25 +17,25 @@ public class OpenQuestion extends Question {
     }
     
     @Override
-    String getQuestion() 
+    public String getQuestion() 
     {
         return question;
     }
 
     @Override
-    String getAnswer() 
+    public String getAnswer() 
     {
         return answer;
     }
 
     @Override
-    QuestionDifficulty getDifficulty() 
+    public QuestionDifficulty getDifficulty() 
     {
         return difficulty;
     }
     
     @Override
-    Category getCategory() 
+    public Category getCategory() 
     {
         return category;
     }

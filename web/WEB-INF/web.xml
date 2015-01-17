@@ -2,43 +2,43 @@
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
     <servlet>
         <servlet-name>NewQuestion</servlet-name>
-        <servlet-class>NewQuestion</servlet-class>
+        <servlet-class>controllers.NewQuestion</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AddQuestion</servlet-name>
-        <servlet-class>AddQuestion</servlet-class>
+        <servlet-class>controllers.AddQuestion</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>Login</servlet-name>
-        <servlet-class>Login</servlet-class>
+        <servlet-class>controllers.Login</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ValidateUserData</servlet-name>
-        <servlet-class>ValidateUserData</servlet-class>
+        <servlet-class>controllers.ValidateUserData</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>StartGame</servlet-name>
-        <servlet-class>StartGame</servlet-class>
+        <servlet-class>controllers.StartGame</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>PlayGame</servlet-name>
-        <servlet-class>PlayGame</servlet-class>
+        <servlet-class>controllers.PlayGame</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>CheckQuestionAnswer</servlet-name>
-        <servlet-class>CheckQuestionAnswer</servlet-class>
+        <servlet-class>controllers.CheckQuestionAnswer</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>RemoveQuestion</servlet-name>
-        <servlet-class>RemoveQuestion</servlet-class>
+        <servlet-class>controllers.RemoveQuestion</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>FinishGame</servlet-name>
-        <servlet-class>FinishGame</servlet-class>
+        <servlet-class>controllers.FinishGame</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>DeleteQuestion</servlet-name>
-        <servlet-class>DeleteQuestion</servlet-class>
+        <servlet-class>controllers.DeleteQuestion</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>NewQuestion</servlet-name>

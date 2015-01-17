@@ -1,9 +1,17 @@
+package services;
+
+import models.Question;
+import models.Category;
+import models.OpenQuestion;
+import models.MultipleAnswersQuestion;
+import models.YesOrNoQuestion;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import models.QuestionDifficulty;
 
 public class TriviaManager {
     

@@ -1,16 +1,18 @@
 package controllers;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import models.Player;
 
 public class Login extends HttpServlet {
 
+    public static final String PlayerAttribute = "player";
     public static final String FirstNameAttribute = "firstName";
     public static final String ErrorMessageAttribute = "errorMessage";
     public static final String LastNameAttribute = "lastName";
@@ -20,13 +22,12 @@ public class Login extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        response.setContentType("text/html;charset=UTF-8");
+        Player player = (Player)session.getAttribute(PlayerAttribute);
         
-        String firstName = (String)session.getAttribute(FirstNameAttribute);
-        String lastName = (String)session.getAttribute(LastNameAttribute);
-        
-        if (firstName == null || lastName == null)
+        if (player == null)
         {
+            String firstName = null;
+            String lastName = null;
             Cookie[] cookies = request.getCookies();
 
             if (cookies != null) {
@@ -47,64 +48,13 @@ public class Login extends HttpServlet {
 
             if (firstName != null && lastName != null)
             {
-                session.setAttribute(FirstNameAttribute, firstName);
-                session.setAttribute(LastNameAttribute, lastName);
+                session.setAttribute(PlayerAttribute, new Player(firstName, lastName));
                 response.sendRedirect("StartGame.html");
             }
             else
             {
-                Object errMessage = request.getAttribute(ErrorMessageAttribute);
-                String firstNameValue = request.getParameter(FirstNameAttribute);
-                String lastNameValue = request.getParameter(LastNameAttribute);
-
-                try (PrintWriter out = response.getWriter()) {
-                out.println("<!DOCTYPE html>");
-                out.println("<html>");
-                out.println("<head>");
-                out.println("<link rel=\"stylesheet\" href=\"Main.css\"/>");
-                out.println("<title>Login</title>");            
-                out.println("</head>");
-                out.println("<body>");
-                out.println("<form action=\"ValidateUserData\" method=\"GET\">");
-                out.println("<img src=\"Welcome.png\" height=\"400\" width=\"800\"/><br><br>");
-                out.println("<h1>Please login to start the game</h1>");
-                out.println("<br>");
-                if (errMessage != null)
-                {
-                     out.println("<h3 id=\"errorMessage\">There are validation errors: "
-                        + errMessage + "</h3>");
-                }
-                out.println("<h2>First name: </h2>");
-                out.println("<input type=\"text\" name=\"" +
-                        FirstNameAttribute + "\" size=\"50\" ");
-
-                if (firstNameValue != null)
-                {
-                    out.println("value=\"" + firstNameValue + "\"");
-                }
-
-                out.println(">");
-                out.println("<h2>Last name: </h2>");
-                out.println("<input type=\"text\" name=\""+ LastNameAttribute +
-                        "\" size=\"50\" ");
-
-                if (lastNameValue != null)
-                {
-                    out.println("value=\"" + lastNameValue + "\"");
-                }
-
-                out.println(">");
-                out.println("<br>");
-                out.println("<br>");
-                out.println("<input type=\"checkbox\" name=\"" +
-                        RememberMeParameter + "\" value=\"" +
-                        RememberMeParameterCheckedValue + "\"> Remember me<br>");
-                out.println("<br>");
-                out.println("<input type=\"submit\" value=\"Submit\">");
-                out.println("</form>");
-                out.println("</body>");
-                out.println("</html>");
-                }
+                RequestDispatcher rd = request.getRequestDispatcher("Login.jsp");
+                rd.forward(request, response);
             }
         }
         else

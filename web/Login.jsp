@@ -11,6 +11,11 @@
             <img src="Welcome.png" height="400" width="800"/><br><br>
             <h1>Please login to start the game</h1><br>
             <% 
+                String isChecked = request.getParameter("rememberMe");
+                if (isChecked == null) {
+                    isChecked = "";
+                }
+                
                 Object errorMessage = request.getAttribute("errorMessage");
                 if (errorMessage != null)
                 { %>
@@ -22,7 +27,7 @@
             <input type="text" name="firstName" size="50" value='${param.firstName}'>
             <h2>Last name: </h2>
             <input type="text" name="lastName" size="50" value='${param.lastName}'><br><br>
-            <input type="checkbox" name="rememberMe" value="true">Remember me<br>
+            <input type="checkbox" name="rememberMe" value="checked" <%= isChecked %>>Remember me<br>
             <input type="submit" value="Submit">
         </form>
     </body>

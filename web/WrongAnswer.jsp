@@ -8,7 +8,7 @@
     </head>
     <body>
         <jsp:useBean id="player" class="models.Player" scope="session"/> 
-        <jsp:useBean id="PreviousAskedQuestion" class="models.Question" scope="session"/> 
+        <jsp:useBean id="PreviousAskedQuestion" type="models.Question" scope="session"/> 
         <h2> Current player: <jsp:getProperty name="player" property="firstName"/> 
             <jsp:getProperty name="player" property="lastName"/></h2>
         <img src="WrongAnswer.jpg" width="100" height="100"></img><br>

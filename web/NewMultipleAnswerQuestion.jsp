@@ -7,25 +7,29 @@
 <html>
     <head>
         <script type='text/javascript'>
-        function addAnswerField() {
-            var number = document.getElementById("numOfanswers").value;
-            if (!isNaN(number) && (parseInt(Number(number)) == number) && !isNaN(parseInt(number, 10))) {
-                var container = document.getElementById("container");
-                while (container.hasChildNodes()) {
-                    container.removeChild(container.lastChild);}
-                var index = parseInt(Number(number));
-                for (i=0; i < index; i++) {
-                    var k = i + 1;
-                    container.appendChild(document.createTextNode("Answer " + k + ": "));
-                    var input = document.createElement("input");
-                    input.type = "text";
-                    input.name = "wrongAnswers" + k.toString();
-                    input.size="100";
-                    container.appendChild(input);
-                    container.appendChild(document.createElement("br"));
+            function isInt(value) {
+                return !isNaN(value) && (parseInt(Number(value)) == value) && !isNaN(parseInt(value, 10));
+            }
+            
+            function addAnswerField() {
+                var number = document.getElementById("numOfanswers").value;
+                if (isInt(number)) {
+                    var container = document.getElementById("container");
+                    while (container.hasChildNodes()) {
+                        container.removeChild(container.lastChild);}
+                    var index = parseInt(Number(number));
+                    for (i=0; i < index; i++) {
+                        var k = i + 1;
+                        container.appendChild(document.createTextNode("Answer " + k + ": "));
+                        var input = document.createElement("input");
+                        input.type = "text";
+                        input.name = "wrongAnswers" + k.toString();
+                        input.size="100";
+                        container.appendChild(input);
+                        container.appendChild(document.createElement("br"));
+                    }
                 }
             }
-        }
         </script>
         <link rel="stylesheet" href="Main.css"/>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">

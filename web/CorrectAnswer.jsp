@@ -14,7 +14,7 @@
         <h3 id="correctAnswer">Your answer is correct!</h3>
         <img src="CorrectAnswer2.jpg" width="100" height="100"></img>
         <br><br><a href="PlayGame">Next Question</a><br><br><br>
-        <form action="FinishGame" method="GET">
+        <form action="FinishGame.jsp" method="GET">
             <input type="submit" value="FinishGame">
         </form>    
     </body>

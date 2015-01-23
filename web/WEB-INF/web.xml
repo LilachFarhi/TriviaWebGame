@@ -33,10 +33,6 @@
         <servlet-class>controllers.RemoveQuestion</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>FinishGame</servlet-name>
-        <servlet-class>controllers.FinishGame</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>DeleteQuestion</servlet-name>
         <servlet-class>controllers.DeleteQuestion</servlet-class>
     </servlet>
@@ -71,10 +67,6 @@
     <servlet-mapping>
         <servlet-name>RemoveQuestion</servlet-name>
         <url-pattern>/RemoveQuestion</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>FinishGame</servlet-name>
-        <url-pattern>/FinishGame</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>DeleteQuestion</servlet-name>

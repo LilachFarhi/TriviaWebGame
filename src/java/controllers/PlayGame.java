@@ -32,7 +32,7 @@ public class PlayGame extends HttpServlet {
         Collections.shuffle(questionsToShow);
 
         if (questionsToShow.isEmpty()) {
-            RequestDispatcher rd = request.getRequestDispatcher("FinishGame");
+            RequestDispatcher rd = request.getRequestDispatcher("/FinishGame.jsp");
             rd.forward(request, response);
         } 
         else
@@ -75,7 +75,7 @@ public class PlayGame extends HttpServlet {
 
                 out.println("<br><input type=\"submit\" value=\"Submit\">");
                 out.println("</form><br>");
-                out.println("<form action=\"FinishGame\" method=\"GET\">");
+                out.println("<form action=\"FinishGame.jsp\" method=\"GET\">");
                 out.println("<input type=\"submit\" value=\"FinishGame\">");
                 out.println("</form>");
                 out.println("</body>");

@@ -16,7 +16,7 @@
         <h4>The right answer is: <jsp:getProperty name="PreviousAskedQuestion" property="answer"/></h4>
         <img src="WrongAnswer2.jpg" width="100" height="100"></img>
         <br><br><a href="PlayGame">Next Question</a><br><br><br>
-        <form action="FinishGame" method="GET">
+        <form action="FinishGame.jsp" method="GET">
             <input type="submit" value="FinishGame">
         </form>
     </body>

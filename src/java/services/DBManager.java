@@ -1,9 +1,5 @@
 package services;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,9 +15,9 @@ public class DBManager {
     private static final String QuestionsTableCategory = "CATEGORY";
     private static final String QuestionsTableDifficulty = "DIFFICULTY";
     private static final String QuestionsTableQuestionType = "QUESTION_TYPE";
-    public static final String OpenQuestionType = "Open";
-    public static final String MultipleAnswerQuestionType = "MultipleAnswer";
-    public static final String YesOrNoQuestionType = "YesNo";
+    public static final String OpenQuestionType = "OpenQuestion";
+    public static final String MultipleAnswerQuestionType = "MultipleAnswersQuestion";
+    public static final String YesOrNoQuestionType = "YesOrNoQuestion";
     private static final String DeleteWrongAnswers = "Delete From WRONG_ANSWERS Where QUESTION_ID=?";
     private static final String DeleteQuestion = "Delete From QUESTIONS Where ID=?";
     private static final String InsertQuestion = "Insert into QUESTIONS (QUESTION, ANSWER, CATEGORY, DIFFICULTY, QUESTION_TYPE) values(?, ?, ?, ?, ?)";

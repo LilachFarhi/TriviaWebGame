@@ -11,16 +11,17 @@
         <title>Remove Question</title>
     </head>
     <body>
-        <% List<Question> allQuestions = (List<Question>)request.getAttribute(RemoveQuestion.AllQuestionsAttribute); %>
+        
+        <jsp:useBean id="AllQuestions" type="java.util.List<models.Question>" scope="session"/> 
         <% Object errorMessageString = request.getAttribute(RemoveQuestion.ErrorMessage); %>
-        <% if(allQuestions.size() > 0)
+        <% if(AllQuestions.size() > 0)
         { %>
             <h1> Please choose a question to delete</h1>
             <form action="DeleteQuestion" method="GET">
-            <%for (int i = 0; i < allQuestions.size(); i++) 
+            <%for (int i = 0; i < AllQuestions.size(); i++) 
                 {%>
                     <div>
-                        <input type="radio" name="Question" value="<%= i %>"> <%= allQuestions.get(i).getQuestion() %> 
+                        <input type="radio" name="Question" value="<%= i %>"> <%= AllQuestions.get(i).getQuestion() %> 
                     </div>
                <% } %>
             <br>

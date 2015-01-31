@@ -29,7 +29,7 @@ public class RemoveQuestion extends HttpServlet {
         HttpSession session = request.getSession();
 
         Map<Category, Map<QuestionDifficulty, List<Question>>> allQuestionsMap = null;
-        request.setAttribute(AllQuestionsAttribute, new ArrayList<Question>());
+        session.setAttribute(AllQuestionsAttribute, new ArrayList<Question>());
         try 
         {
             allQuestionsMap = DataManager.GetDataByCategoryAndDifficulty();
@@ -56,7 +56,6 @@ public class RemoveQuestion extends HttpServlet {
                 allListQuestions.stream().forEach((allListQuestion) -> {allQuestions.addAll(allListQuestion); });
 
                 session.setAttribute(AllQuestionsAttribute, allQuestions);
-                request.setAttribute(AllQuestionsAttribute, allQuestions);
             }
         }
 

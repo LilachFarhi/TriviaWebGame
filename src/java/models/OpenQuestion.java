@@ -6,10 +6,18 @@ public class OpenQuestion extends Question {
     private String answer;
     private Category category;
     private QuestionDifficulty difficulty;
+    private Integer id;
     
     public OpenQuestion(String question, String answer, 
             QuestionDifficulty difficulty, Category category)
     {
+        this(0, question, answer, difficulty, category);
+    }
+    
+    public OpenQuestion(Integer id, String question, String answer, 
+            QuestionDifficulty difficulty, Category category)
+    {
+        this.id = id;
         this.question = question;
         this.answer = answer;
         this.difficulty = difficulty;
@@ -39,4 +47,9 @@ public class OpenQuestion extends Question {
     {
         return category;
     }  
+    
+    @Override
+    public Integer getId() {
+        return id;
+    }
 }

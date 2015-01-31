@@ -42,7 +42,7 @@ public class AddQuestion extends HttpServlet {
             if (questionToAdd != null)
             {
                 String path = getServletContext().getRealPath("/");
-                errorMessage = DataManager.AddQuestionToTriviaData(questionToAdd, path);
+                errorMessage = DataManager.AddQuestion(questionToAdd);
                 
                 if ("".equals(errorMessage))
                 {

@@ -19,7 +19,7 @@ public class TriviaManager {
     private Map<Type, Map<Category, List<Question>>> triviaDataByCategory;
     private Map<Category, Map<QuestionDifficulty, List<Question>>> triviaDataByCategoryAndDifficulty;
     
-    public TriviaManager(List<Object> triviaData)
+    public TriviaManager(List<Question> triviaData)
     {
         this.triviaDataByDifficulty = new HashMap();
         this.triviaDataByDifficulty.put(MultipleAnswersQuestion.class, new HashMap());
@@ -69,7 +69,7 @@ public class TriviaManager {
         CreateTriviaData(triviaData);
     }
 
-    private void CreateTriviaData(List<Object> triviaData) 
+    private void CreateTriviaData(List<Question> triviaData) 
     {
         for (Object currentObject : triviaData)
         {

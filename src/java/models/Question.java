@@ -8,4 +8,5 @@ public abstract class Question implements Serializable {
     public abstract String getAnswer();
     public abstract Category getCategory();
     public abstract QuestionDifficulty getDifficulty();
+    public abstract Integer getId();
 }

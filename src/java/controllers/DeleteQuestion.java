@@ -30,7 +30,7 @@ public class DeleteQuestion extends HttpServlet {
 
             if (questionToDelete != null) 
             {
-                String errorMessage = DataManager.RemoveQuestionFromTriviaData(questionToDelete, path, false);
+                String errorMessage = DataManager.RemoveQuestion(questionToDelete);
                 request.setAttribute(ErrorMessage, errorMessage);
             } 
             else 

@@ -5,6 +5,7 @@ import models.QuestionDifficulty;
 import models.Question;
 import models.Category;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +24,7 @@ public class RemoveQuestion extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException 
     {
+        boolean isValid = true;
         String path = getServletContext().getRealPath("/");
         HttpSession session = request.getSession();
 
@@ -30,33 +32,36 @@ public class RemoveQuestion extends HttpServlet {
         request.setAttribute(AllQuestionsAttribute, new ArrayList<Question>());
         try 
         {
-            allQuestionsMap = DataManager.GetDataByCategoryAndDifficulty(path);
+            allQuestionsMap = DataManager.GetDataByCategoryAndDifficulty();
         } 
-        catch (IOException | ClassNotFoundException ex) 
+        catch (SQLException | ClassNotFoundException ex) 
         {
-            request.setAttribute(ErrorMessage, DataManager.GetErrorMessage(ex, path + "\\" + DataManager.TriviaDataFileName));
+            request.setAttribute(ErrorMessage, DataManager.GetErrorMessage(ex));
+            isValid = false;
         }
 
-        if (DataManager.isMapByCategoryAndDifficultyEmpty(allQuestionsMap)) 
+        if (isValid)
         {
+            if (DataManager.isMapByCategoryAndDifficultyEmpty(allQuestionsMap)) 
+            {
                 request.setAttribute(ErrorMessage, "Sorry we don't have questions to delete at this moment.");
-        } 
-        else 
-        {
-            List<Map<QuestionDifficulty, List<Question>>> list = new ArrayList<>(allQuestionsMap.values());
-            List<List<Question>> allListQuestions = new ArrayList<>();
-            list.stream().forEach((list1) -> {allListQuestions.addAll(list1.values());});
+            } 
+            else 
+            {
+                List<Map<QuestionDifficulty, List<Question>>> list = new ArrayList<>(allQuestionsMap.values());
+                List<List<Question>> allListQuestions = new ArrayList<>();
+                list.stream().forEach((list1) -> {allListQuestions.addAll(list1.values());});
 
-            List<Question> allQuestions = new ArrayList<>();
-            allListQuestions.stream().forEach((allListQuestion) -> {allQuestions.addAll(allListQuestion); });
+                List<Question> allQuestions = new ArrayList<>();
+                allListQuestions.stream().forEach((allListQuestion) -> {allQuestions.addAll(allListQuestion); });
 
-            session.setAttribute(AllQuestionsAttribute, allQuestions);
-            request.setAttribute(AllQuestionsAttribute, allQuestions);
+                session.setAttribute(AllQuestionsAttribute, allQuestions);
+                request.setAttribute(AllQuestionsAttribute, allQuestions);
+            }
         }
 
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("RemoveQuestion.jsp");
         requestDispatcher.forward(request, response);
-
     }
 
    

@@ -3,122 +3,83 @@ package services;
 import models.QuestionDifficulty;
 import models.Question;
 import models.Category;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.lang.reflect.Type;
-import java.util.ArrayList;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
 public class DataManager {
-    public static final String TriviaDataFileName = "TriviaData.txt";
     private static DBManager dbManager;
     private static TriviaManager triviaManager;
     
-    public static String AddQuestionToTriviaData(Question questionToAdd, String path) 
+    public static String AddQuestion(Question questionToAdd)
     {
-        try 
+        String errorMessage = "";
+        
+        try
         {
-            GetTriviaDataFromFile(path + "\\" + TriviaDataFileName);
-            triviaManager.AddQuestion(questionToAdd);
-            
-            List<Object> allQuestions = GetAllQuestionsForSave(triviaManager.getTriviaDataByDifficulty());
-            dbManager.WriteAllDataToFile(allQuestions);
-            return "";
+            dbManager.AddQuestion(questionToAdd);
         }
-        catch (IOException | ClassNotFoundException ex) 
+        catch (ClassNotFoundException | SQLException ex)
         {
-            return GetErrorMessage(ex, path + "\\" + TriviaDataFileName);
+            errorMessage = GetErrorMessage(ex);
         }
+        
+        return errorMessage;
     }
     
-    public static String RemoveQuestionFromTriviaData(Question questionToRemove, 
-            String path, boolean initializeNeeded) 
+    public static String RemoveQuestion(Question questionToRemove) 
     {
-        try 
+        String errorMessage = "";
+        
+        try
         {
-            if (initializeNeeded)
-            {
-                GetTriviaDataFromFile(path + "\\" + TriviaDataFileName);
-            }
-            
-            triviaManager.DeleteQuestion(questionToRemove);
-            
-            List<Object> allQuestions = GetAllQuestionsForSave(triviaManager.getTriviaDataByDifficulty());
-            dbManager.WriteAllDataToFile(allQuestions);
-            return "";
+            dbManager.RemoveQuestion(questionToRemove);
         }
-        catch (IOException | ClassNotFoundException ex) 
+        catch (ClassNotFoundException | SQLException ex)
         {
-            return GetErrorMessage(ex, path + "\\" + TriviaDataFileName);
+            errorMessage = GetErrorMessage(ex);
         }
+        
+        return errorMessage;
     }
     
-    private static void GetTriviaDataFromFile(String path) throws IOException, 
-            FileNotFoundException, ClassNotFoundException
+    public static String GetErrorMessage(Exception ex)
     {
-        dbManager = new DBManager(path);
-        triviaManager = new TriviaManager(dbManager.GetAllDataFromFile());
-    }
-    
-    public static String GetErrorMessage(Exception ex, String path)
-    {
-        return ("An error occurred while trying to connect "
-                + "to the trivia data file : \'" + path
-                + "\'.\n"
+        return ("An error occurred while trying to communicate with database.\n"
                 + "Please check the file location or contact "
                 + "the system administrator.\n"
                 + "Error data : " + ex);
     }
     
-    public static Map<Category, Map<QuestionDifficulty, List<Question>>> GetDataByCategoryAndDifficulty(String path) throws IOException, 
-            FileNotFoundException, ClassNotFoundException
+    public static Map<Category, Map<QuestionDifficulty, List<Question>>> GetDataByCategoryAndDifficulty() 
+            throws SQLException, ClassNotFoundException 
     {
-        GetTriviaDataFromFile(path + "\\" + TriviaDataFileName);
+        List<Question> allQuestions = dbManager.GetAllQuestions();
+        triviaManager = new TriviaManager(allQuestions);
         return triviaManager.getTriviaDataByCategoryAndDifficulty();
-    }
-    
-    private static List<Object> GetAllQuestionsForSave(Map<Type, Map<QuestionDifficulty, List<Question>>> triviaData) 
-    {
-        List<Object> allQuestions = new ArrayList();
-
-        for (Map.Entry<Type, Map<QuestionDifficulty, List<Question>>> entryType : triviaData.entrySet()) 
-        {
-            for (Map.Entry<QuestionDifficulty, List<Question>> entry : entryType.getValue().entrySet()) 
-            {
-                allQuestions.addAll(entry.getValue());
-            }
-        }
-
-        return allQuestions;
-    }
-    
-    public static List<Object> GetAllQuestions(String path) throws IOException, 
-            FileNotFoundException, ClassNotFoundException
-    {
-        GetTriviaDataFromFile(path + "\\" + TriviaDataFileName);
-        List<Object> allQuestions = GetAllQuestionsForSave(triviaManager.getTriviaDataByDifficulty());
-        return allQuestions;
     }
     
     public static boolean isMapByCategoryAndDifficultyEmpty(Map<Category, Map<QuestionDifficulty, List<Question>>>  map)
     {
         boolean isEmpty = true;
         
-        for (Map.Entry<Category, Map<QuestionDifficulty, List<Question>>> categoryEntry : map.entrySet())
+        if (map != null)
         {
-            if (!categoryEntry.getValue().isEmpty()) 
+            for (Map.Entry<Category, Map<QuestionDifficulty, List<Question>>> categoryEntry : map.entrySet())
             {
-                for (Map.Entry<QuestionDifficulty, List<Question>> difficultyEntry : categoryEntry.getValue().entrySet()) 
+                if (!categoryEntry.getValue().isEmpty()) 
                 {
-                    if (!difficultyEntry.getValue().isEmpty())
+                    for (Map.Entry<QuestionDifficulty, List<Question>> difficultyEntry : categoryEntry.getValue().entrySet()) 
                     {
-                        isEmpty = false;
-                        break;
+                        if (!difficultyEntry.getValue().isEmpty())
+                        {
+                            isEmpty = false;
+                            break;
+                        }
                     }
                 }
+
             }
-            
         }
         return isEmpty;
     }

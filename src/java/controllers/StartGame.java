@@ -8,6 +8,7 @@ import java.io.FileNotFoundException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -30,12 +31,12 @@ public class StartGame extends HttpServlet
     public static final String NothingSelectedAttribute = "nothingSelected";
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, FileNotFoundException, ClassNotFoundException 
+            throws ServletException, ClassNotFoundException, SQLException, IOException 
     {
         HttpSession session = request.getSession();
         String path = getServletContext().getRealPath("/");
         Map<Category, Map<QuestionDifficulty, List<Question>>> allQuestions = 
-                DataManager.GetDataByCategoryAndDifficulty(path);
+                DataManager.GetDataByCategoryAndDifficulty();
         
         List<Question> selectedQuestions = new ArrayList<>();
         List<Category> categoriesWithoutDifficulty = new ArrayList<>();
@@ -135,6 +136,8 @@ public class StartGame extends HttpServlet
             processRequest(request, response);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(StartGame.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(StartGame.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -144,6 +147,8 @@ public class StartGame extends HttpServlet
         try {
             processRequest(request, response);
         } catch (ClassNotFoundException ex) {
+            Logger.getLogger(StartGame.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
             Logger.getLogger(StartGame.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

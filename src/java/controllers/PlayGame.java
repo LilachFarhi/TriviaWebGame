@@ -18,7 +18,7 @@ public class PlayGame extends HttpServlet {
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RequestDispatcher rd ;
+        RequestDispatcher rd;
         HttpSession session = request.getSession();
         Object errMessage = request.getAttribute(ErrorMessageAttribute);
 

@@ -12,7 +12,7 @@ import java.util.Map;
 
 public class DataManager {
     public static final String TriviaDataFileName = "TriviaData.txt";
-    private static FileManager fileManager;
+    private static DBManager dbManager;
     private static TriviaManager triviaManager;
     
     public static String AddQuestionToTriviaData(Question questionToAdd, String path) 
@@ -23,7 +23,7 @@ public class DataManager {
             triviaManager.AddQuestion(questionToAdd);
             
             List<Object> allQuestions = GetAllQuestionsForSave(triviaManager.getTriviaDataByDifficulty());
-            fileManager.WriteAllDataToFile(allQuestions);
+            dbManager.WriteAllDataToFile(allQuestions);
             return "";
         }
         catch (IOException | ClassNotFoundException ex) 
@@ -45,7 +45,7 @@ public class DataManager {
             triviaManager.DeleteQuestion(questionToRemove);
             
             List<Object> allQuestions = GetAllQuestionsForSave(triviaManager.getTriviaDataByDifficulty());
-            fileManager.WriteAllDataToFile(allQuestions);
+            dbManager.WriteAllDataToFile(allQuestions);
             return "";
         }
         catch (IOException | ClassNotFoundException ex) 
@@ -57,8 +57,8 @@ public class DataManager {
     private static void GetTriviaDataFromFile(String path) throws IOException, 
             FileNotFoundException, ClassNotFoundException
     {
-        fileManager = new FileManager(path);
-        triviaManager = new TriviaManager(fileManager.GetAllDataFromFile());
+        dbManager = new DBManager(path);
+        triviaManager = new TriviaManager(dbManager.GetAllDataFromFile());
     }
     
     public static String GetErrorMessage(Exception ex, String path)

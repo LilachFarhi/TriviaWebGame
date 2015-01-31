@@ -10,11 +10,11 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FileManager {
+public class DBManager {
     
     private String fileName;
     
-    public FileManager(String fileName)
+    public DBManager(String fileName)
     {
         this.fileName = fileName;
     }

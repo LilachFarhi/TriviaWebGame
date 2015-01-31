@@ -17,7 +17,7 @@ public class Login extends HttpServlet {
     public static final String ErrorMessageAttribute = "errorMessage";
     public static final String LastNameCookieAttribute = "lastName";
     public static final String RememberMeParameter = "rememberMe";
-    public static final String RememberMeParameterCheckedValue = "true";
+    public static final String RememberMeParameterCheckedValue = "checked";
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
